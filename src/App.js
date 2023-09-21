@@ -19,9 +19,9 @@ function App() {
         }
         const dashboardresult = await dashboardresponse.json();
         setDashboardData(dashboardresult);
-        updateChart(dashboardresult);
         setLoading(false);
         fetchWfData();
+        updateChart(dashboardresult);
       } catch (error) {
         setError('Error fetching data. Please try again later.');
         console.error('Error fetching data:', error);
@@ -42,6 +42,7 @@ function App() {
       }
     };
     fetchDashboardData();
+
     
   }, []);
 

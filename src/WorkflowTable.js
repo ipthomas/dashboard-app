@@ -73,7 +73,7 @@ function WorkflowTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'status', desc: true }],
+        sortBy: [{ id: 'pathway', desc: false }],
       },
     },
     useSortBy
