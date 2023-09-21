@@ -37,7 +37,7 @@ table {
     text-align: center;
 }
 .dashboard-escalated-cell {
-    background-color: rgba(255, 55, 255, 0.2);
+    background-color: rgba(255, 0, 0, 0.4);
     color: #000000;
     text-align: center;
 }

@@ -30,7 +30,7 @@ function App() {
     };
     const fetchWfData = async () => {
       try {
-        const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=ian.thomas&org=tiani-spirit&role=clinician`);
+        const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=ian.thomas&org=tiani-spirit&role=clinician&status=OPEN`);
         if (!wfresponse.ok) {
           throw new Error('Network response was not ok');
         }
@@ -54,20 +54,20 @@ function App() {
           label: 'ICB Workflows',
           data: Object.values(data),
           backgroundColor: [
-            'rgba(54, 255, 132, 0.2)',
             'rgba(55, 255, 255, 0.2)',
+            'rgba(255, 0, 0, 0.4)',
             'rgba(150, 206, 86, 0.2)',
             'rgba(150, 55, 192, 0.2)',
-            'rgba(255, 55, 255, 0.2)',
             'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 255, 132, 0.2)',
           ],
           borderColor: [
-            'rgba(54, 255, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(150, 206, 86, 1)',
-            'rgba(150, 55, 192, 1)',
-            'rgba(255, 55, 255, 1)',
-            'rgba(54, 162, 235, 1)',
+            'rgba(55, 255, 255, 0.2)',
+            'rgba(255, 0, 0, 0.4)',
+            'rgba(150, 206, 86, 0.2)',
+            'rgba(150, 55, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 255, 132, 0.2)',
           ],
           borderWidth: 1,
         },
