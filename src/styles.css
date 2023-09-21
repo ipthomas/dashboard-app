@@ -1,0 +1,70 @@
+
+h1 {
+    color: #060707;
+    background-color: lightcyan;
+    border-style: outset;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 90%;
+    border: 1px solid #ddd;
+    font: 1em sans-serif;
+    background-color: rgb(221, 234, 234);
+    align-content: center;
+    font-family: 'sans-serif';
+}
+
+.dashboard-total-cell {
+    background-color: rgba(54, 255, 132, 0.2);
+    color: #000000;
+    text-align: center;
+}
+
+.dashboard-inprogress-cell {
+    background-color:rgba(55, 255, 255, 0.2);
+    color: #000000;
+    text-align: center;
+}
+.dashboard-targetmet-cell {
+    background-color: rgba(150, 206, 86, 0.2);
+    color: #000000;
+    text-align: center;
+}
+.dashboard-targetmissed-cell {
+    background-color: rgba(150, 55, 192, 0.2);
+    color: #000000;
+    text-align: center;
+}
+.dashboard-escalated-cell {
+    background-color: rgba(255, 55, 255, 0.2);
+    color: #000000;
+    text-align: center;
+}
+.dashboard-complete-cell {
+    background-color: rgba(54, 162, 235, 0.2);
+    color: #000000;
+    text-align: center;
+}
+table th,
+table td {
+    text-align: left;
+    padding: 16px;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #34c0e3;
+    color: white;
+}
