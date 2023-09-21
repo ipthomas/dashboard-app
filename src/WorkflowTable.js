@@ -15,18 +15,6 @@ function WorkflowTable({ data }) {
         accessor: 'nhsid',
       },
       {
-        Header: 'Version',
-        accessor: 'version',
-      },
-      {
-        Header: 'Created By',
-        accessor: 'createdby',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-      },
-      {
         Header: 'Due Date',
         accessor: 'completeby',
       },
@@ -45,10 +33,6 @@ function WorkflowTable({ data }) {
       {
         Header: 'Escalated',
         accessor: 'escalated',
-      },
-      {
-        Header: 'Target Met',
-        accessor: 'targetmet',
       },
       {
         Header: 'Duration',
@@ -85,7 +69,7 @@ function WorkflowTable({ data }) {
         borderCollapse: 'collapse',
         width: '98%',
         margin: '10px',
-        fontSize: '12px',
+        fontSize: '14px',
       }}>
         <thead>
           {headerGroups.map((headerGroup) => (

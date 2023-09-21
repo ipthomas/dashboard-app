@@ -81,6 +81,7 @@ function App() {
           beginAtZero: true,
         },
       },
+      maintainAspectRatio: false,
     };
 
     if (chartRef.current) {
@@ -141,7 +142,7 @@ function App() {
         </div>
         <div className='centered-row'>
           <div className="chart-container">
-                  <canvas ref={chartRef} width={1300} height={300}></canvas>
+                  <canvas ref={chartRef}></canvas>
           </div>
         </div>
         <div>

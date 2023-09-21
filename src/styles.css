@@ -4,6 +4,12 @@ h1 {
     background-color: lightcyan;
     border-style: outset;
 }
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 40vh;
+    width: 80vw;
+}
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -48,7 +54,7 @@ table {
 }
 table th,
 table td {
-    text-align: left;
+    text-align: center;
     padding: 16px;
     border: 1px solid #ddd;
 }
