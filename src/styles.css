@@ -20,7 +20,16 @@ table {
     align-content: center;
     font-family: 'Open Sans';
 }
-
+.overdue-false {
+    color: green;
+    /* Change this to your desired text color */
+    /* Add any other styling you want for these cells */
+}
+.overdue-true {
+    color: rgb(241, 14, 14);
+    /* Change this to your desired text color */
+    /* Add any other styling you want for these cells */
+}
 .dashboard-total-cell {
     background-color: rgba(54, 255, 132, 0.2);
     color: #000000;

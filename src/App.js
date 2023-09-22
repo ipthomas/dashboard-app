@@ -38,12 +38,12 @@ function App() {
   };
   useEffect(() => {
     fetchDashboardData();
-    const intervalId1 = setInterval(fetchDashboardData, 10000); // 10000 milliseconds = 10 seconds
+    const intervalId1 = setInterval(fetchDashboardData, 30000);
     return () => clearInterval(intervalId1);
   }, []);
   useEffect(() => {
     fetchWfData();
-    const intervalId2 = setInterval(fetchWfData, 10000); // 10000 milliseconds = 10 seconds
+    const intervalId2 = setInterval(fetchWfData, 30000);
     return () => clearInterval(intervalId2);
   }, []);
 

@@ -91,11 +91,18 @@ function WorkflowTable({ data }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
+
+            // Get the value of the "overdue" column
+            const overdueValue = row.values.overdue;
+
+            // Determine the class based on the value
+            const rowClassName = overdueValue === 'FALSE' ? 'overdue-false' : 'overdue-true';
+
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return <td className="table-cell" {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                })}
+              <tr {...row.getRowProps()} className={rowClassName}>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                ))}
               </tr>
             );
           })}
