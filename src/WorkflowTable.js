@@ -57,7 +57,7 @@ function WorkflowTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'pathway', desc: false }],
+        sortBy: [{ id: 'overdue', desc: true }],
       },
     },
     useSortBy
