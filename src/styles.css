@@ -15,10 +15,10 @@ table {
     border-spacing: 0;
     width: 90%;
     border: 1px solid #ddd;
-    font: 1em sans-serif;
+    font: 1em;
     background-color: rgb(221, 234, 234);
     align-content: center;
-    font-family: 'sans-serif';
+    font-family: 'Open Sans';
 }
 
 .dashboard-total-cell {

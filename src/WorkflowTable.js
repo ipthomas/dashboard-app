@@ -65,12 +65,15 @@ function WorkflowTable({ data }) {
   
   return (
     <div>
-      <table {...getTableProps()} style={{
-        borderCollapse: 'collapse',
-        width: '98%',
-        margin: '10px',
-        fontSize: '14px',
-      }}>
+      <
+        table {...getTableProps()} style={{
+          borderCollapse: 'collapse',
+          width: '98%',
+          margin: '10px',
+          fontSize: '14px',
+          fontFamily: 'Open Sans'
+        }}
+      >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className='table' {...headerGroup.getHeaderGroupProps()}>

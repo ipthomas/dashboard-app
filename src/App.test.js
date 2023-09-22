@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('page header with value "Workflows Dashboard" is present', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const pageHeader = screen.getByText('Workflows Dashboard');
+  expect(pageHeader).toBeInTheDocument();
+});
+test('page loading with value "Loading Data............" is present', () => {
+  render(<App />);
+  const loadingData = screen.getByText('Loading Data............');
+  expect(loadingData).toBeInTheDocument();
 });

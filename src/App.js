@@ -1,97 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import Chart from 'chart.js/auto';
 import WorkflowTable from './WorkflowTable';
+import DashboardChart from './DashboardChart'; 
 
 function App() {
   const [dashboarddata, setDashboardData] = useState({});
   const [wfdata, setWfData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const chartRef = useRef(null);
-
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=sytem&org=icb&role=broker`);
-        if (!dashboardresponse.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const dashboardresult = await dashboardresponse.json();
-        setDashboardData(dashboardresult);
-        setLoading(false);
-        fetchWfData();
-        updateChart(dashboardresult);
-      } catch (error) {
-        setError('Error fetching data. Please try again later.');
-        console.error('Error fetching data:', error);
-        setLoading(false);
+  const fetchDashboardData = async () => {
+    try {
+      const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=sytem&org=icb&role=broker`);
+      if (!dashboardresponse.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
-    const fetchWfData = async () => {
-      try {
-        const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=ian.thomas&org=tiani-spirit&role=clinician&status=OPEN`);
-        if (!wfresponse.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const wfresult = await wfresponse.json();
-        setWfData(wfresult);
-      } catch (error) {
-        setError('Error fetching data. Please try again later.');
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchDashboardData();
-
-    
-  }, []);
-
-  
-  const updateChart = (data) => {
-    const chartData = {
-      labels: Object.keys(data),
-      datasets: [
-        {
-          label: 'ICB Workflows',
-          data: Object.values(data),
-          backgroundColor: [
-            'rgba(55, 255, 255, 0.2)',
-            'rgba(255, 0, 0, 0.4)',
-            'rgba(150, 206, 86, 0.2)',
-            'rgba(150, 55, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 255, 132, 0.2)',
-          ],
-          borderColor: [
-            'rgba(55, 255, 255, 0.2)',
-            'rgba(255, 0, 0, 0.4)',
-            'rgba(150, 206, 86, 0.2)',
-            'rgba(150, 55, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 255, 132, 0.2)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    const chartOptions = {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-      maintainAspectRatio: false,
-    };
-
-    if (chartRef.current) {
-      new Chart(chartRef.current, {
-        type: 'bar',
-        data: chartData,
-        options: chartOptions,
-      });
+      const dashboardresult = await dashboardresponse.json();
+      setDashboardData(dashboardresult);
+      setLoading(false);
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+      setLoading(false);
     }
   };
+  const fetchWfData = async () => {
+    try {
+      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=ian.thomas&org=tiani-spirit&role=clinician&status=OPEN`);
+      if (!wfresponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const wfresult = await wfresponse.json();
+      setWfData(wfresult);
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {   
+    fetchDashboardData();
+    fetchWfData();
+  // eslint-disable-next-line
+  }, []);
+
   const getDashboardCellStyle = (category) => {
     switch (category) {
       case 'Total':
@@ -140,10 +90,8 @@ function App() {
             </tbody>
           </table>
         </div>
-        <div className='centered-row'>
-          <div className="chart-container">
-                  <canvas ref={chartRef}></canvas>
-          </div>
+        <div>
+          <DashboardChart data={dashboarddata}/>
         </div>
         <div>
             <WorkflowTable data={wfdata} />
