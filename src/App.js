@@ -36,10 +36,15 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
-  useEffect(() => {   
+  useEffect(() => {
     fetchDashboardData();
+    const intervalId1 = setInterval(fetchDashboardData, 10000); // 10000 milliseconds = 10 seconds
+    return () => clearInterval(intervalId1);
+  }, []);
+  useEffect(() => {
     fetchWfData();
-  // eslint-disable-next-line
+    const intervalId2 = setInterval(fetchWfData, 10000); // 10000 milliseconds = 10 seconds
+    return () => clearInterval(intervalId2);
   }, []);
 
   const getDashboardCellStyle = (category) => {
