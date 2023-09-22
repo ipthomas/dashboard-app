@@ -96,7 +96,7 @@ function App() {
           </table>
         </div>
         <div>
-          <DashboardChart data={dashboarddata}/>
+                <DashboardChart data={dashboarddata}/>
         </div>
         <div>
             <WorkflowTable data={wfdata} />
