@@ -1,11 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import './styles.css';
+import Modal from './Modal';
+import { FaEye } from 'react-icons/fa';
 
 function WorkflowTable({ data }) {
   
   const columns = useMemo(
     () => [
+      {
+        Header: '',
+        accessor: 'details',
+        Cell: ({ row }) => (
+          <span onClick={() => handleOpenModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+        ),
+      },
       {
         Header: 'Pathway',
         accessor: 'pathway',
@@ -62,6 +71,19 @@ function WorkflowTable({ data }) {
     },
     useSortBy
   );
+  const [modalPathway, setModalPathway] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalNhs, setModalNhs] = useState(null);
+
+  const handleOpenModal = (pathway,nhs) => {
+    setModalPathway(pathway);
+    setModalNhs(nhs)
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   
   return (
     <div>
@@ -108,6 +130,13 @@ function WorkflowTable({ data }) {
           })}
         </tbody>
       </table>
+      {isModalOpen && (
+        <Modal
+          pathway={modalPathway}
+          nhs={modalNhs}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }
