@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import './styles.css';
-import Modal from './Modal';
+import TasksModal from './TasksModal';
 import { FaEye } from 'react-icons/fa';
 
 function WorkflowTable({ data }) {
@@ -9,10 +9,10 @@ function WorkflowTable({ data }) {
   const columns = useMemo(
     () => [
       {
-        Header: '',
+        Header: 'Tasks',
         accessor: 'details',
         Cell: ({ row }) => (
-          <span onClick={() => handleOpenModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+          <span onMouseEnter={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
         ),
       },
       {
@@ -75,7 +75,7 @@ function WorkflowTable({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNhs, setModalNhs] = useState(null);
 
-  const handleOpenModal = (pathway,nhs) => {
+  const handleOpenTasksModal = (pathway,nhs) => {
     setModalPathway(pathway);
     setModalNhs(nhs)
     setIsModalOpen(true);
@@ -131,7 +131,7 @@ function WorkflowTable({ data }) {
         </tbody>
       </table>
       {isModalOpen && (
-        <Modal
+        <TasksModal
           pathway={modalPathway}
           nhs={modalNhs}
           onClose={closeModal}

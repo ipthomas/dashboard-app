@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Modal({ pathway, nhs, onClose }) {
+function TasksModal({ pathway, nhs, onClose }) {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -30,39 +30,42 @@ function Modal({ pathway, nhs, onClose }) {
         <div className="modal-overlay">
             <div className="modal">
                 <div className="modal-header">
-                    <h2>NHS ID {nhs} {pathway} Workflow Tasks State</h2>
                     <button className="close-button" onClick={onClose}>
                         &times;
                     </button>
+                    <h2>NHS ID {nhs} {pathway} Workflow Tasks State</h2>
                 </div>
                 <div className="modal-content">
-                    <p>Tasks</p>
                     {loading ? (
                         <p>Loading tasks...</p>
                     ) : (
-                        <table>
+                        <table className='modal-table'>
                             <thead>
                                 {/* Define your table header */}
                                 <tr>
                                     <th>Task</th>
                                     <th>Status</th>
+                                    <th>Owner</th>
                                     <th>Complete Task By</th>
                                     <th>Started On</th>
                                     <th>Completed On</th>
                                     <th>Duration</th>
-                                    <th>Owner</th>
+                                    <th>On Target</th>
+                                    <th>Escalated</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {tasks.taskstate.map((task) => (
                                     <tr key={task.taskid}>
-                                        <td>{task.taskid}</td>
+                                        <td>{task.name}</td>
                                         <td>{task.status}</td>
+                                        <td>{task.owner}</td>
                                         <td>{task.completeby}</td>
                                         <td>{task.startedon}</td>
                                         <td>{task.completedon}</td>
                                         <td>{task.duration}</td>
-                                        <td>{task.owner}</td>
+                                        <td>{task.targetmet.toString()}</td>
+                                        <td>{task.escalated.toString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -74,4 +77,4 @@ function Modal({ pathway, nhs, onClose }) {
     );
 }
 
-export default Modal;
+export default TasksModal;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import WorkflowTable from './WorkflowTable';
-import DashboardChart from './DashboardChart'; 
+import DashboardBarChart from './DashboardBarChart'; 
 
 function App() {
   const [dashboarddata, setDashboardData] = useState({});
@@ -95,8 +95,8 @@ function App() {
             </tbody>
           </table>
         </div>
-        <div>
-                <DashboardChart data={dashboarddata}/>
+        <div className='chart-container'>
+            <DashboardBarChart data={dashboarddata}/>
         </div>
         <div>
             <WorkflowTable data={wfdata} />

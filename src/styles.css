@@ -5,14 +5,14 @@ h1 {
     border-style: outset;
 }
 .chart-container {
-    position: relative;
-    margin: auto;
-    height: 40vh;
-    width: 80vw;
+    display: flex;
+    justify-content: center;
+    width: 97%;
+    margin: 0 auto;
 }
 table {
     border-collapse: collapse;
-    border-spacing: 0;
+    border-spacing: 10px;
     width: 90%;
     border: 1px solid #ddd;
     font: 1em;
@@ -22,13 +22,9 @@ table {
 }
 .overdue-false {
     color: green;
-    /* Change this to your desired text color */
-    /* Add any other styling you want for these cells */
 }
 .overdue-true {
     color: rgb(241, 14, 14);
-    /* Change this to your desired text color */
-    /* Add any other styling you want for these cells */
 }
 .dashboard-total-cell {
     background-color: rgba(54, 255, 132, 0.2);
@@ -110,7 +106,6 @@ table th {
     color: white;
     padding: 10px;
     display: flex;
-    justify-content: space-between;
 }
 
 .modal-header h2 {
@@ -131,5 +126,8 @@ table th {
 
 .modal-content {
     padding: 10px;
-    width: 100%;
+    align-items: center;
+}
+.modal-table {
+    align-items: center;
 }

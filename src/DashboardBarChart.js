@@ -1,7 +1,7 @@
 import React, {useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-function DashboardChart({ data }) {
+function DashboardBarChart({ data }) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
@@ -32,7 +32,7 @@ function DashboardChart({ data }) {
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 255, 132, 0.2)',
                     ],
-                    borderWidth: 1,
+                    borderWidth: 1, 
                 },
             ],
         };
@@ -60,4 +60,4 @@ function DashboardChart({ data }) {
     return <canvas ref={chartRef}></canvas>;
 }
 
-export default DashboardChart;
+export default DashboardBarChart;
