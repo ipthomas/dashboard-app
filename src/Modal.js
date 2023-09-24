@@ -7,8 +7,9 @@ function Modal({ pathway, nhs, onClose }) {
     useEffect(() => {
         // Fetch data based on the pathway value
         const fetchData = async () => {
+    
             try {
-                const response = await fetch(`http://localhost:8080/api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}`);
+                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
