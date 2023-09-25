@@ -2,12 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import WorkflowTable from './WorkflowTable';
 import DashboardBarChart from './DashboardBarChart'; 
+import DashboardPieChart from './DashboardPieChart'; 
 
 function App() {
+  const [workflowscnt, setWorkflowCnt] = useState({});
   const [dashboarddata, setDashboardData] = useState({});
   const [wfdata, setWfData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const fetchWfsCnt = async () => {
+    try {
+      const wfsCntresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows/count?user=dashboard&org=icb&role=admin`);
+      if (!wfsCntresponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const wfsCntresult = await wfsCntresponse.json();
+      setWorkflowCnt(wfsCntresult);
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+    }
+  };
   const fetchDashboardData = async () => {
     try {
       const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=sytem&org=icb&role=broker`);
@@ -46,7 +61,11 @@ function App() {
     const intervalId2 = setInterval(fetchWfData, 30000);
     return () => clearInterval(intervalId2);
   }, []);
-
+  useEffect(() => {
+    fetchWfsCnt();
+    const intervalId2 = setInterval(fetchWfsCnt, 30000);
+    return () => clearInterval(intervalId2);
+  }, []);
   const getDashboardCellStyle = (category) => {
     switch (category) {
       case 'Total':
@@ -97,6 +116,9 @@ function App() {
         </div>
         <div className='chart-container'>
             <DashboardBarChart data={dashboarddata}/>
+        </div>
+        <div className='chart-container'>
+          <DashboardPieChart data={workflowscnt} />
         </div>
         <div>
             <WorkflowTable data={wfdata} />
