@@ -5,11 +5,13 @@ import DashboardBarChart from './DashboardBarChart';
 import DashboardPieChart from './DashboardPieChart'; 
 
 function App() {
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [workflowscnt, setWorkflowCnt] = useState({});
   const [dashboarddata, setDashboardData] = useState({});
   const [wfdata, setWfData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const fetchWfsCnt = async () => {
     try {
       const wfsCntresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows/count?user=dashboard&org=icb&role=admin`);
@@ -24,6 +26,7 @@ function App() {
     }
   };
   const fetchDashboardData = async () => {
+    setCurrentTime(new Date());
     try {
       const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=sytem&org=icb&role=broker`);
       if (!dashboardresponse.ok) {
@@ -63,8 +66,8 @@ function App() {
   }, []);
   useEffect(() => {
     fetchWfsCnt();
-    const intervalId2 = setInterval(fetchWfsCnt, 30000);
-    return () => clearInterval(intervalId2);
+    const intervalId3 = setInterval(fetchWfsCnt, 30000);
+    return () => clearInterval(intervalId3);
   }, []);
   const getDashboardCellStyle = (category) => {
     switch (category) {
@@ -88,6 +91,7 @@ function App() {
   return (
     <div className="App">
       <h1>Workflows Dashboard</h1>
+      <h2>Last Update {currentTime.toLocaleTimeString()}</h2>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
