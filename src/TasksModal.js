@@ -5,16 +5,13 @@ function TasksModal({ pathway, nhs, onClose }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch data based on the pathway value
         const fetchData = async () => {
-    
             try {
                 const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const result = await response.json();
-                console.log(result)
                 setTasks(result);
                 setLoading(false);
             } catch (error) {
@@ -24,7 +21,7 @@ function TasksModal({ pathway, nhs, onClose }) {
         };
 
         fetchData();
-    }, [pathway, nhs]); // Fetch data whenever pathway changes
+    }, [pathway, nhs]);
 
     return (
         <div className="modal-overlay">
@@ -41,7 +38,6 @@ function TasksModal({ pathway, nhs, onClose }) {
                     ) : (
                         <table className='modal-table'>
                             <thead>
-                                {/* Define your table header */}
                                 <tr>
                                     <th>Task</th>
                                     <th>Status</th>

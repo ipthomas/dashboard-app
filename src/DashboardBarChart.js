@@ -7,7 +7,6 @@ function DashboardBarChart({ data }) {
     const chartInstance = useRef(null);
     const updateChart = (data) => {
         if (chartInstance.current) {
-            // Destroy the existing chart if it exists
             chartInstance.current.destroy();
         }
         const chartData = {

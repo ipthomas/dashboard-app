@@ -113,11 +113,7 @@ function WorkflowTable({ data }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
-
-            // Get the value of the "overdue" column
             const overdueValue = row.values.overdue;
-
-            // Determine the class based on the value
             const rowClassName = overdueValue === 'FALSE' ? 'overdue-false' : 'overdue-true';
 
             return (
@@ -129,7 +125,8 @@ function WorkflowTable({ data }) {
             );
           })}
         </tbody>
-      </table>
+      </table
+      >
       {isModalOpen && (
         <TasksModal
           pathway={modalPathway}

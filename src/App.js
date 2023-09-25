@@ -115,8 +115,7 @@ function App() {
           </table>
         </div>
         <div className='chart-container'>
-            <DashboardBarChart data={dashboarddata}/>
-        
+          <DashboardBarChart data={dashboarddata}/>
           <DashboardPieChart data={workflowscnt} />
         </div>
         <div>

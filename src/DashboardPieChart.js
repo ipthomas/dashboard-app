@@ -24,8 +24,8 @@ function DashboardPieChart({ data }) {
             type: 'pie',
             data: chartData,
             options: {
-                responsive: true, // Allow responsiveness
-                maintainAspectRatio: false, // Disable default aspect ratio
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: true,
