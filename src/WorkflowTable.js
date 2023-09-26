@@ -86,6 +86,7 @@ function WorkflowTable({ data }) {
   
   return (
     <div>
+      <h3>Open Workflows</h3>
       <
         table {...getTableProps()} style={{
           borderCollapse: 'collapse',
