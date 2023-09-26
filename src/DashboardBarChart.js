@@ -1,7 +1,7 @@
 import React, {useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-function DashboardBarChart({ data }) {
+function DashboardBarChart({ data, title}) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
@@ -23,7 +23,7 @@ function DashboardBarChart({ data }) {
     //       return '';
     //   }
     // };
-    const updateChart = (data) => {
+    const updateChart = (data, title) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
         }
@@ -31,7 +31,7 @@ function DashboardBarChart({ data }) {
             labels: Object.keys(data),
             datasets: [
                 {
-                    label: 'ICB Workflows',
+                    label: title,
                     data: Object.values(data),
                     backgroundColor: [
                         'rgba(55, 255, 255, 0.2)',
@@ -71,8 +71,8 @@ function DashboardBarChart({ data }) {
         }
     };
     useEffect(() => {
-        updateChart(data);
-    }, [data]);
+        updateChart(data, title);
+    }, [data,title]);
 
     return <canvas ref={chartRef}></canvas>;
 }
