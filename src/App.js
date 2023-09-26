@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import WorkflowTable from './WorkflowTable';
 import DashboardBarChart from './DashboardBarChart'; 
-import DashboardPieChart from './DashboardPieChart'; 
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -119,11 +118,10 @@ function App() {
           </table>
         </div>
         <div className='chart-container'>
-          <DashboardBarChart data={dashboarddata}/>
-          <DashboardPieChart data={workflowscnt} />
+          <DashboardBarChart data={workflowscnt} />
         </div>
         <div>
-            <WorkflowTable data={wfdata} />
+          <WorkflowTable data={wfdata} />
         </div>
         </>
       )}

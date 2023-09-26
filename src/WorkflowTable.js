@@ -5,7 +5,6 @@ import TasksModal from './TasksModal';
 import { FaEye } from 'react-icons/fa';
 
 function WorkflowTable({ data }) {
-  
   const columns = useMemo(
     () => [
       {
@@ -54,7 +53,6 @@ function WorkflowTable({ data }) {
     ],
     []
   );
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -71,6 +69,7 @@ function WorkflowTable({ data }) {
     },
     useSortBy
   );
+  
   const [modalPathway, setModalPathway] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNhs, setModalNhs] = useState(null);
@@ -128,12 +127,11 @@ function WorkflowTable({ data }) {
       </table
       >
       {isModalOpen && (
-        <TasksModal
-          pathway={modalPathway}
-          nhs={modalNhs}
-          onClose={closeModal}
-        />
+        <TasksModal pathway={modalPathway} nhs={modalNhs} onClose={closeModal} 
+
+      />
       )}
+      
     </div>
   );
 }
