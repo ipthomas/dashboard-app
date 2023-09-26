@@ -3,6 +3,16 @@ h1 {
     color: #060707;
     background-color: lightcyan;
     border-style: outset;
+    width: 95%;
+    align-content: center;
+    font-family: 'Open Sans';
+    border-spacing: 10px;
+    justify-content: center;
+    width: 87%;
+    border: 1px solid #ddd;
+    font: 1em;
+    margin: 0 auto;
+    padding: 5px;
 }
 .chart-container {
     display: flex;
@@ -77,8 +87,8 @@ table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
-    background-color: #34c0e3;
-    color: white;
+    background-color: rgba(54, 162, 235, 0.1);
+    color: black;
 }
 .modal-overlay {
     position: fixed;

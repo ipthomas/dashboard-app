@@ -89,8 +89,8 @@ function WorkflowTable({ data }) {
       <
         table {...getTableProps()} style={{
           borderCollapse: 'collapse',
-          width: '98%',
-          margin: '10px',
+          width: '95%',
+          margin: '20px',
           fontSize: '14px',
           fontFamily: 'Open Sans'
         }}
