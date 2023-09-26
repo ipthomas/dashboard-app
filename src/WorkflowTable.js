@@ -64,7 +64,7 @@ function WorkflowTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'overdue', desc: true }],
+        sortBy: [{ id: 'escalated', desc: true }],
       },
     },
     useSortBy
@@ -113,8 +113,8 @@ function WorkflowTable({ data }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
-            const overdueValue = row.values.overdue;
-            const rowClassName = overdueValue === 'FALSE' ? 'overdue-false' : 'overdue-true';
+            const escalatedValue = row.values.escalated;
+            const rowClassName = escalatedValue === 'FALSE' ? 'overdue-false' : 'overdue-true';
 
             return (
               <tr {...row.getRowProps()} className={rowClassName}>
