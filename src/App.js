@@ -68,24 +68,6 @@ function App() {
     const intervalId3 = setInterval(fetchWfsCnt, 30000);
     return () => clearInterval(intervalId3);
   }, []);
-  const getDashboardCellStyle = (category) => {
-    switch (category) {
-      case 'Total':
-        return 'dashboard-total-cell';
-      case 'InProgress':
-        return 'dashboard-inprogress-cell';
-      case 'TargetMet':
-        return 'dashboard-targetmet-cell';
-      case 'TargetMissed':
-        return 'dashboard-targetmissed-cell';
-      case 'Escalated':
-        return 'dashboard-escalated-cell';
-      case 'Complete':
-        return 'dashboard-complete-cell';
-      default:
-        return '';
-    }
-  };
 
   return (
     <div className="App">
@@ -97,25 +79,8 @@ function App() {
         <p>{error}</p>
       ) : (
         <>
-        <div className='centered-row'>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(dashboarddata).map((category) => (
-                  <th key={category}>{category}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {Object.entries(dashboarddata).map(([category, value]) => (
-                  <td key={category} className={getDashboardCellStyle(category)}>
-                    {value}
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+        <div className='chart-container'>
+                <DashboardBarChart data={dashboarddata} />
         </div>
         <div className='chart-container'>
           <DashboardBarChart data={workflowscnt} />

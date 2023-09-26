@@ -5,6 +5,24 @@ function DashboardBarChart({ data }) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
+    // const getDashboardCellStyle = (category) => {
+    //   switch (category) {
+    //     case 'Total':
+    //       return 'dashboard-total-cell';
+    //     case 'InProgress':
+    //       return 'dashboard-inprogress-cell';
+    //     case 'TargetMet':
+    //       return 'dashboard-targetmet-cell';
+    //     case 'TargetMissed':
+    //       return 'dashboard-targetmissed-cell';
+    //     case 'Escalated':
+    //       return 'dashboard-escalated-cell';
+    //     case 'Complete':
+    //       return 'dashboard-complete-cell';
+    //     default:
+    //       return '';
+    //   }
+    // };
     const updateChart = (data) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
