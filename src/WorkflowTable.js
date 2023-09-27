@@ -114,8 +114,8 @@ function WorkflowTable({ data }) {
           {rows.map((row) => {
             prepareRow(row);
             const escalatedValue = row.values.escalated;
-            const rowClassName = escalatedValue === 'FALSE' ? 'overdue-false' : 'overdue-true';
-
+            const overdueValue = row.values.overdue;
+            const rowClassName = overdueValue === 'FALSE' ? 'escalated-false': escalatedValue === 'FALSE' ? 'overdue-true':'escalated-true';
             return (
               <tr {...row.getRowProps()} className={rowClassName}>
                 {row.cells.map((cell) => (

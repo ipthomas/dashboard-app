@@ -12,7 +12,7 @@ h1 {
     border: 1px solid #ddd;
     font: 1em;
     margin: 0 auto;
-    padding: 5px;
+    padding: 1px;
 }
 .chart-container {
     display: flex;
@@ -30,11 +30,15 @@ table {
     align-content: center;
     font-family: 'Open Sans';
 }
-.overdue-false {
+.escalated-false {
     color: green;
 }
-.overdue-true {
+.escalated-true {
     color: rgb(241, 14, 14);
+}
+.overdue-true {
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 211, 54, 0.713);
 }
 .dashboard-total-cell {
     background-color: rgba(54, 255, 132, 0.2);
