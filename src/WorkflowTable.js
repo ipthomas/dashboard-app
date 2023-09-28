@@ -64,7 +64,7 @@ function WorkflowTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'escalated', desc: true }],
+        sortBy: [{ id: 'timeremaining', desc: false }],
       },
     },
     useSortBy
@@ -90,8 +90,6 @@ function WorkflowTable({ data }) {
       <
         table {...getTableProps()} style={{
           borderCollapse: 'collapse',
-          width: '95%',
-          margin: '20px',
           fontSize: '14px',
           fontFamily: 'Open Sans'
         }}

@@ -3,16 +3,10 @@ h1 {
     color: #060707;
     background-color: lightcyan;
     border-style: outset;
-    width: 95%;
     align-content: center;
     font-family: 'Open Sans';
-    border-spacing: 10px;
     justify-content: center;
-    width: 95%;
     border: 1px solid #ddd;
-    font: 1em;
-    margin: 0 auto;
-    padding: 1px;
 }
 .chart-container {
     display: flex;

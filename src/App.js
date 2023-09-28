@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import WorkflowTable from './WorkflowTable';
 import DashboardBarChart from './DashboardBarChart'; 
-import PathwaysTable from './PathwaysTable';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -120,8 +119,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Workflows Dashboard</h1>
-      <h2>Last Update {currentTime.toLocaleTimeString()}</h2>
+      <h1>Workflows Dashboard      </h1>
+      <h4>Last Update {currentTime.toLocaleTimeString()}</h4>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
@@ -137,12 +136,25 @@ function App() {
         <div className='chart-container'>
           <DashboardBarChart data={lacPathwaysData} title='LAC Workflows' />
         </div>
-
         <div>
           <WorkflowTable data={openWorkflowsData} />
         </div>
-              <div className='centered-row'>
-          <PathwaysTable data={pathways} />
+        <div>
+        <h4>Pathway Names</h4>
+        <table>
+          <tbody>
+            <tr>
+              {pathways.map((pathway) => (
+                <td>{pathway.Value}</td>
+              ))}
+            </tr>
+            <tr>
+              {pathways.map((pathway) => (
+                <td>{pathway.Text}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
         </div>
         </>
       )}
