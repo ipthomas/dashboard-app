@@ -1,12 +1,13 @@
 
-h1 {
+h2 {
     color: #060707;
-    background-color: lightcyan;
+    background-color: rgba(55, 255, 255, 0.05);
     border-style: outset;
     align-content: center;
     font-family: 'Open Sans';
     justify-content: center;
     border: 1px solid #ddd;
+    margin: 0 auto;
 }
 .chart-container {
     display: flex;
@@ -20,7 +21,7 @@ table {
     width: 100%;
     border: 1px solid #ddd;
     font: 1em;
-    background-color: rgb(221, 234, 234);
+    background-color: rgba(221, 234, 234,0.1);
     align-content: center;
     font-family: 'Open Sans';
 }

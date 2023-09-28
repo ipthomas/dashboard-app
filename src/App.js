@@ -119,7 +119,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Workflows Dashboard      </h1>
+      <h2>Workflows Dashboard      </h2>
       <h4>Last Update {currentTime.toLocaleTimeString()}</h4>
       {loading ? (
         <p>Loading Data............</p>
@@ -140,7 +140,7 @@ function App() {
           <WorkflowTable data={openWorkflowsData} />
         </div>
         <div>
-        <h4>Pathway Names</h4>
+        <h5>Pathway Names</h5>
         <table>
           <tbody>
             <tr>

@@ -35,15 +35,7 @@ function PathwaysTable({ data }) {
   
   return (
     <div>
-      <
-        table {...getTableProps()} style={{
-          borderCollapse: 'collapse',
-          width: '30%',
-          margin: '20px',
-          fontSize: '14px',
-          fontFamily: 'Open Sans'
-        }}
-      >
+      <table>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -70,8 +62,7 @@ function PathwaysTable({ data }) {
             );
           })}
         </tbody>
-      </table
-      >      
+      </table>
     </div>
   );
 }
