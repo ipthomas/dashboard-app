@@ -30,7 +30,7 @@ function TasksModal({ pathway, nhs, onClose }) {
                     <button className="close-button" onClick={onClose}>
                         &times;
                     </button>
-                    <h2>NHS ID {nhs} {pathway} Workflow Tasks State</h2>
+                    <h3>NHS ID {nhs} {pathway} Workflow Tasks State</h3>
                 </div>
                 <div className="modal-content">
                     {loading ? (
