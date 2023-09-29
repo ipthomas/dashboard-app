@@ -53,7 +53,9 @@ function TasksModal({ pathway, nhs, onClose }) {
                             <tbody>
                                 {tasks.taskstate.map((task) => (                                   
                                     <tr key={task.taskid}>
-                                        <td>{task.name}</td>
+                                        <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
+                                            {task.name}
+                                        </td>
                                         <td>{task.status}</td>
                                         <td>{task.owner}</td>
                                         <td>{task.completeby}</td>
