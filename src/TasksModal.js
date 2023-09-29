@@ -51,7 +51,7 @@ function TasksModal({ pathway, nhs, onClose }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tasks.taskstate.map((task) => (
+                                {tasks.taskstate.map((task) => (                                   
                                     <tr key={task.taskid}>
                                         <td>{task.name}</td>
                                         <td>{task.status}</td>
@@ -60,8 +60,12 @@ function TasksModal({ pathway, nhs, onClose }) {
                                         <td>{task.startedon}</td>
                                         <td>{task.completedon}</td>
                                         <td>{task.duration}</td>
-                                        <td>{task.targetmet.toString()}</td>
-                                        <td>{task.escalated.toString()}</td>
+                                        <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
+                                            {task.targetmet.toString()}
+                                        </td>
+                                        <td className={task.escalated ? 'escalated-true' : 'escalated-false'}>
+                                            {task.escalated.toString()}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

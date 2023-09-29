@@ -45,7 +45,8 @@ table {
     color: green;
 }
 .escalated-true {
-    color: rgb(241, 14, 14);
+    background-color: rgb(241, 14, 14);
+    color: black;
 }
 .overdue-true {
     color: rgb(0, 0, 0);
