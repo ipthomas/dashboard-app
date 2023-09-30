@@ -39,6 +39,7 @@ function TasksModal({ pathway, nhs, onClose }) {
                         <table className='modal-table'>
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Task</th>
                                     <th>Status</th>
                                     <th>Owner</th>
@@ -53,6 +54,9 @@ function TasksModal({ pathway, nhs, onClose }) {
                             <tbody>
                                 {tasks.taskstate.map((task) => (                                   
                                     <tr key={task.taskid}>
+                                        <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
+                                            {task.taskid}
+                                        </td>
                                         <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
                                             {task.name}
                                         </td>

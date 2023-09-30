@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import './styles.css';
 import TasksModal from './TasksModal';
+import EventsModal from './EventsModal';
 import { FaEye } from 'react-icons/fa';
 
 function WorkflowTable({ data }) {
@@ -9,7 +10,7 @@ function WorkflowTable({ data }) {
     () => [
       {
         Header: 'Tasks',
-        accessor: 'details',
+        accessor: 'taskdetails',
         Cell: ({ row }) => (
           <span onMouseEnter={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
         ),
@@ -50,6 +51,13 @@ function WorkflowTable({ data }) {
         Header: 'Time Remaining',
         accessor: 'timeremaining',
       },
+      {
+        Header: 'Events',
+        accessor: 'eventdetails',
+        Cell: ({ row }) => (
+          <span onMouseEnter={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+        ),
+      },
     ],
     []
   );
@@ -70,20 +78,29 @@ function WorkflowTable({ data }) {
     useSortBy
   );
   
-  const [modalPathway, setModalPathway] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalNhs, setModalNhs] = useState(null);
+  const [tasksModalPathway, setTasksModalPathway] = useState(null);
+  const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
+  const [tasksModalNhs, setTasksModalNhs] = useState(null);
+  const [eventsModalPathway, setEventsModalPathway] = useState(null);
+  const [isEventsModalOpen, setIsEventsModalOpen] = useState(false);
+  const [eventsModalNhs, setEventsModalNhs] = useState(null);
 
   const handleOpenTasksModal = (pathway,nhs) => {
-    setModalPathway(pathway);
-    setModalNhs(nhs)
-    setIsModalOpen(true);
+    setTasksModalPathway(pathway);
+    setTasksModalNhs(nhs)
+    setIsTasksModalOpen(true);
   };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleOpenEventsModal = (pathway, nhs) => {
+    setEventsModalPathway(pathway);
+    setEventsModalNhs(nhs)
+    setIsEventsModalOpen(true);
   };
-  
+  const closeTasksModal = () => {
+    setIsTasksModalOpen(false);
+  };
+  const closeEventsModal = () => {
+    setIsEventsModalOpen(false);
+  };
   return (
     <div>
       <h5>Open Workflows</h5>
@@ -125,12 +142,12 @@ function WorkflowTable({ data }) {
         </tbody>
       </table
       >
-      {isModalOpen && (
-        <TasksModal pathway={modalPathway} nhs={modalNhs} onClose={closeModal} 
-
-      />
+      {isTasksModalOpen && (
+        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} onClose={closeTasksModal}/>
       )}
-      
+      {isEventsModalOpen && (
+        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} onClose={closeEventsModal} />
+      )}
     </div>
   );
 }

@@ -1,3 +1,8 @@
+textarea {
+    width: 800px;
+    height: 400px;
+    font-family: 'Open Sans';
+}
 h1 {
     color: #060707;
     background-color: rgba(55, 255, 255, 0.08);
@@ -23,7 +28,6 @@ h3 {
     align-content: center;
     font-family: 'Open Sans';
     justify-content: center;
-    margin: 0 auto;
 }
 .chart-container {
     display: flex;
@@ -104,6 +108,7 @@ table th {
     text-align: center;
     background-color: rgba(54, 162, 235, 0.1);
     color: black;
+    font-family: 'Open Sans';
 }
 .modal-overlay {
     position: fixed;
@@ -122,9 +127,9 @@ table th {
     background: white;
     border-radius: 25px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    width: 90%;
     align-items: center;
+    font-family: 'Open Sans';
+    font-size: small;
 }
 
 .modal-header {
@@ -132,7 +137,6 @@ table th {
     border-top-right-radius: 25px;
     background: rgba(216, 222, 225, 0.2);
     color: white;
-    padding: 10px;
     display: flex;
 }
 
@@ -144,14 +148,6 @@ table th {
     cursor: pointer;
 }
 
-.close-button:focus {
-    outline: none;
-}
-
 .modal-content {
     padding: 10px;
-    align-items: center;
-}
-.modal-table {
-    align-items: center;
 }

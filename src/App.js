@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import WorkflowTable from './WorkflowTable';
 import DashboardBarChart from './DashboardBarChart'; 
+import { FaEye } from 'react-icons/fa';
+import DefinitionModal from './DefinitionModal';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -116,7 +118,16 @@ function App() {
     const intervalId4 = setInterval(fetchLacDataWithInterval, 30000);
     return () => clearInterval(intervalId4);
   }, []);
+  const [modalPathway, setModalPathway] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleOpenDefModal = (pathway) => {
+    setModalPathway(pathway);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="App">
       <h2>Workflows Dashboard      </h2>
@@ -140,21 +151,26 @@ function App() {
           <WorkflowTable data={openWorkflowsData} />
         </div>
         <div>
-        <h5>Pathway Names</h5>
-        <table>
-          <tbody>
-            <tr>
-              {pathways.map((pathway) => (
-                <td>{pathway.Value}</td>
-              ))}
-            </tr>
-            <tr>
-              {pathways.map((pathway) => (
-                <td>{pathway.Text}</td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+          <h5>Defined Pathways</h5>
+          <table>
+            <tbody>
+              <tr>
+                {pathways.map((pathway) => (
+                  <>
+                    <td className='escalated-false'><span onMouseEnter={() => handleOpenDefModal(pathway)}><FaEye /></span> {pathway.Value}</td>
+                  </>
+                ))}
+              </tr>
+              <tr>
+                {pathways.map((pathway) => (
+                  <td>{pathway.Text}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+          {isModalOpen && (
+            <DefinitionModal pathway={modalPathway} onClose={closeModal} />
+          )}
         </div>
         </>
       )}

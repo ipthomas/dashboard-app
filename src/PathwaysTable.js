@@ -1,16 +1,21 @@
 import React, { useMemo } from 'react';
-import { useTable, useSortBy } from 'react-table';
+import { useTable } from 'react-table';
 import './styles.css';
+import { FaEye } from 'react-icons/fa';
 
 function PathwaysTable({ data }) {
   const columns = useMemo(
     () => [
       {
+        Header: 'Def',
+        accessor: <FaEye />,
+      },
+      {
         Header: 'Pathway',
         accessor: 'Text',
       },
       {
-        Header: 'Name',
+        Header: 'Description',
         accessor: 'Value',
       },
     ],
@@ -29,21 +34,22 @@ function PathwaysTable({ data }) {
       initialState: {
         sortBy: [{ id: 'Text', desc: false }],
       },
-    },
-    useSortBy
+    }
   );
   
   return (
     <div>
-      <table>
+      <
+        table {...getTableProps()} style={{
+          borderCollapse: 'collapse',
+          fontFamily: 'Open Sans'
+        }}
+      >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽 ' : ' 🔼 ') : ''}
-                  </span>
                   {column.render('Header')}
                 </th>
               ))}
@@ -54,15 +60,16 @@ function PathwaysTable({ data }) {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr key={task.taskid} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  <td {...cell.getCellProps()}>{cell.render('Cell')} </td>          
                 ))}
               </tr>
             );
           })}
         </tbody>
-      </table>
+      </table
+      >      
     </div>
   );
 }
