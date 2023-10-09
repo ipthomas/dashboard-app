@@ -3,11 +3,20 @@ import { useTable, useSortBy } from 'react-table';
 import './styles.css';
 import TasksModal from './TasksModal';
 import EventsModal from './EventsModal';
+import PatientModal from './PatientModal';
+import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
-function WorkflowTable({ data }) {
+function ClosedWorkflowsTable({ data }) {
   const columns = useMemo(
     () => [
+      {
+        Header: 'Pathway',
+        accessor: 'pwy',
+        Cell: ({ row }) => (
+          row.values.pathway.toUpperCase()
+        ),
+      },
       {
         Header: 'Tasks',
         accessor: 'taskdetails',
@@ -16,8 +25,25 @@ function WorkflowTable({ data }) {
         ),
       },
       {
-        Header: 'Pathway',
+        Header: 'Definition',
         accessor: 'pathway',
+        Cell: ({ row }) => (
+          <span onMouseEnter={() => handleOpenDefinitionModal(row.values.pathway)}><FaEye /></span>
+        ),
+      },
+      {
+        Header: 'Events',
+        accessor: 'eventdetails',
+        Cell: ({ row }) => (
+          <span onMouseEnter={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+        ),
+      },
+      {
+        Header: 'Patient',
+        accessor: 'patientdetails',
+        Cell: ({ row }) => (
+          <span onMouseEnter={() => handleOpenPatientModal(row.values.nhsid)}><FaEye /></span>
+        ),
       },
       {
         Header: 'NHS ID',
@@ -51,13 +77,6 @@ function WorkflowTable({ data }) {
         Header: 'Time Remaining',
         accessor: 'timeremaining',
       },
-      {
-        Header: 'Events',
-        accessor: 'eventdetails',
-        Cell: ({ row }) => (
-          <span onMouseEnter={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
-        ),
-      },
     ],
     []
   );
@@ -72,7 +91,7 @@ function WorkflowTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'timeremaining', desc: false }],
+        sortBy: [{ id: 'pathway', desc: false }],
       },
     },
     useSortBy
@@ -82,18 +101,30 @@ function WorkflowTable({ data }) {
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
   const [eventsModalPathway, setEventsModalPathway] = useState(null);
+  const [definitionModalPathway, setDefinitionModalPathway] = useState(null);
   const [isEventsModalOpen, setIsEventsModalOpen] = useState(false);
   const [eventsModalNhs, setEventsModalNhs] = useState(null);
+  const [patientModalNhs, setPatientModalNhs] = useState(null);
+  const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
+  const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
 
   const handleOpenTasksModal = (pathway,nhs) => {
     setTasksModalPathway(pathway);
     setTasksModalNhs(nhs)
     setIsTasksModalOpen(true);
   };
+  const handleOpenPatientModal = (nhs) => {
+    setPatientModalNhs(nhs)
+    setIsPatientModalOpen(true);
+  };
   const handleOpenEventsModal = (pathway, nhs) => {
     setEventsModalPathway(pathway);
     setEventsModalNhs(nhs)
     setIsEventsModalOpen(true);
+  };
+  const handleOpenDefinitionModal = (pathway) => {
+    setDefinitionModalPathway(pathway);
+    setIsDefinitionModalOpen(true);
   };
   const closeTasksModal = () => {
     setIsTasksModalOpen(false);
@@ -101,13 +132,19 @@ function WorkflowTable({ data }) {
   const closeEventsModal = () => {
     setIsEventsModalOpen(false);
   };
+  const closePatientModal = () => {
+    setIsPatientModalOpen(false);
+  };
+  const closeDefinitionModal = () => {
+    setIsDefinitionModalOpen(false);
+  };
   return (
     <div>
-      <h5>Open Workflows</h5>
+      <h5>ICB Closed Workflows</h5>
       <
         table {...getTableProps()} style={{
           borderCollapse: 'collapse',
-          fontSize: '14px',
+          fontSize: 'small',
           fontFamily: 'Open Sans'
         }}
       >
@@ -148,8 +185,14 @@ function WorkflowTable({ data }) {
       {isEventsModalOpen && (
         <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} onClose={closeEventsModal} />
       )}
+      {isPatientModalOpen && (
+        <PatientModal nhs={patientModalNhs} onClose={closePatientModal} />
+      )}
+      {isDefinitionModalOpen && (
+        <DefinitionModel pathway={definitionModalPathway} onClose={closeDefinitionModal} />
+      )}
     </div>
   );
 }
 
-export default WorkflowTable;
+export default ClosedWorkflowsTable;

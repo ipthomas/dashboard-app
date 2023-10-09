@@ -1,10 +1,11 @@
 import React, {useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-function DashboardBarChart({ data, title}) {
+function DashboardBarChart({ data, title, pathway, onChartHover }) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
+    console.log(pathway)
     // const getDashboardCellStyle = (category) => {
     //   switch (category) {
     //     case 'Total':
@@ -35,19 +36,21 @@ function DashboardBarChart({ data, title}) {
                     data: Object.values(data),
                     backgroundColor: [
                         'rgba(55, 255, 255, 0.2)',
-                        'rgba(255, 0, 0, 0.4)',
+                        'rgba(150, 50, 220, 0.2)',
                         'rgba(150, 206, 86, 0.2)',
-                        'rgba(150, 55, 192, 0.2)',
+                        'rgba(200, 255, 50, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 255, 132, 0.2)',
+                        'rgba(0, 255, 200, 0.2)',
                     ],
                     borderColor: [
                         'rgba(55, 255, 255, 0.2)',
-                        'rgba(255, 0, 0, 0.4)',
+                        'rgba(150, 50, 220, 0.2)',
                         'rgba(150, 206, 86, 0.2)',
-                        'rgba(150, 55, 192, 0.2)',
+                        'rgba(200, 255, 50, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 255, 132, 0.2)',
+                        'rgba(0, 255, 200, 0.2)',
                     ],
                     borderWidth: 1, 
                 },
@@ -70,9 +73,10 @@ function DashboardBarChart({ data, title}) {
             });
         }
     };
-    useEffect(() => {
+
+    useEffect(() => { 
         updateChart(data, title);
-    }, [data,title]);
+    }, [data, title, pathway]);
 
     return <canvas ref={chartRef}></canvas>;
 }

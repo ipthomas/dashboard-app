@@ -26,6 +26,10 @@ function EventsModal({ pathway, nhs, onClose }) {
     return (
         <div className="modal-overlay">
             <div className="modal">
+                {loading ? (
+                    <p>Loading events...</p>
+                ) : (
+                <>
                 <div className="modal-header">
                     <button className="close-button" onClick={onClose}>
                         &times;
@@ -33,14 +37,11 @@ function EventsModal({ pathway, nhs, onClose }) {
                     <h3>NHS ID {nhs} {pathway} Workflow Events</h3>
                 </div>
                 <div className="modal-content">
-                    {loading ? (
-                        <p>Loading events...</p>
-                    ) : (
-                        <table className='modal-table'>
+                    <table className='modal-table'>
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Created</th>
+                                    <th>Event Time</th>
                                     <th>Task</th>
                                     <th>Author</th>
                                     <th>Comments</th>
@@ -48,7 +49,7 @@ function EventsModal({ pathway, nhs, onClose }) {
                             </thead>
                             <tbody>
                                {events.events.map((event) => (
-                                   event.comments != 'None' && event.id > 0? (
+                                   event.comments !== 'None' && event.id > 0? (
                                     <tr key={event.id}>
                                         <td>{event.id}</td>
                                         <td>{event.creationtime}</td>
@@ -59,9 +60,10 @@ function EventsModal({ pathway, nhs, onClose }) {
                                    ) : null
                                 ))}
                             </tbody>
-                        </table>
-                    )}
+                        </table>                   
                 </div>
+                </>
+                )}
             </div>
         </div>
     );

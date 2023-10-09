@@ -7,7 +7,7 @@ function DefinitionModal({ pathway, onClose }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/definition?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway.Value}`);
+                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/definition?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

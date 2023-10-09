@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
-import WorkflowTable from './WorkflowTable';
-import DashboardBarChart from './DashboardBarChart'; 
-import { FaEye } from 'react-icons/fa';
-import DefinitionModal from './DefinitionModal';
+import OpenWorkflowsTable from './OpenWorkflowsTable';
+import ClosedWorkflowsTable from './ClosedWorkflowsTable';
+import DashboardBarChart from './DashboardBarChart';
+import PathwaysTable from './PathwaysTable';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [allWorkflowsCount, setAllWorkflowsCount] = useState({});
-  const [workflowsData, setWorkflowsData] = useState({});
-  const [lacPathwaysData, setLacPathwaysData] = useState([]);
-  const [pathways, setPathways] = useState([]);
+  const [icbWorkflowCounts, setIcbWorkflowCounts] = useState({});
+  const [icbWorkflows, setIcbWorkflows] = useState({});
+  const [pathwayWorkflows, setPathwayWorkflows] = useState([]);
   const [openWorkflowsData, setOpenWorkflowsData] = useState([]);
+  const [closedWorkflowsData, setClosedWorkflowsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  const fetchWorkflowsData = async () => {
+  const [selectedPathway, setSelectedPathway] = useState("lac");
+  const [pathways, setPathways] = useState([])
+
+  const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
     try {
       const workflowsresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker`);
@@ -23,7 +25,7 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const workflowsresult = await workflowsresponse.json();
-      setWorkflowsData(workflowsresult);
+      setIcbWorkflows(workflowsresult);
       setLoading(false);
     } catch (error) {
       setError('Error fetching data. Please try again later.');
@@ -32,34 +34,58 @@ function App() {
     }
   };
   
-  const fetchAllWorkflowsCount = async () => {
+  const fetchicbWorkflowCounts = async () => {
     try {
       const workflowsCountResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows/count?user=workflow&org=icb&role=broker`);
       if (!workflowsCountResponse.ok) {
         throw new Error('Network response was not ok');
       }
       const workflowsCountResult = await workflowsCountResponse.json();
-      setAllWorkflowsCount(workflowsCountResult);
+      setIcbWorkflowCounts(workflowsCountResult);
     } catch (error) {
       setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
   };
-  
-  const fetchLacPathwaysData = async () => {
+  const fetchPathways = async () => {
     try {
-      const lacpathwaysresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=lac`);
-      if (!lacpathwaysresponse.ok) {
+      const pathwaysResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/pathways?user=workflow&org=icb&role=broker`);
+      if (!pathwaysResponse.ok) {
         throw new Error('Network response was not ok');
       }
-      const lacpathwaysresult = await lacpathwaysresponse.json();
-      setLacPathwaysData(lacpathwaysresult);
+      const pathwaysResult = await pathwaysResponse.json();
+      setPathways(pathwaysResult);
     } catch (error) {
       setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
   };
-
+  const fetchpathwayWorkflows = useCallback(async (selectedPathway) => {
+    try {
+      const pathwaysresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
+      if (!pathwaysresponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const pathwaysresult = await pathwaysresponse.json();
+      setPathwayWorkflows(pathwaysresult);
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+    }
+  }, []);
+  const fetchClosedWorkflowsData = async () => {
+    try {
+      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED`);
+      if (!wfresponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const wfresult = await wfresponse.json();
+      setClosedWorkflowsData(wfresult);
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+    }
+  };
   const fetchOpenWorkflowsData = async () => {
     try {
       const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN`);
@@ -73,104 +99,73 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
-
-  const fetchPathways = async () => {
-    try {
-      const pwyresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/pathways?user=workflow&org=icb&role=broker`);
-      if (!pwyresponse.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const pwyresult = await pwyresponse.json();
-      setPathways(pwyresult);
-    } catch (error) {
-      setError('Error fetching data. Please try again later.');
-      console.error('Error fetching data:', error);
-    }
+  const handlePathwayHover = (selectedPathway) => {
+    setSelectedPathway(selectedPathway);
   };
+  useEffect(() => {
+    fetchicbWorkflows();
+    const intervalId1 = setInterval(fetchicbWorkflows, 30000);
+    return () => clearInterval(intervalId1);
+  }, []);
   useEffect(() => {
     fetchPathways();
     const intervalId1 = setInterval(fetchPathways, 30000);
     return () => clearInterval(intervalId1);
   }, []);
   useEffect(() => {
-    fetchWorkflowsData();
-    const intervalId1 = setInterval(fetchWorkflowsData, 30000);
-    return () => clearInterval(intervalId1);
-  }, []);
-  
-  useEffect(() => {
     fetchOpenWorkflowsData();
     const intervalId2 = setInterval(fetchOpenWorkflowsData, 30000);
     return () => clearInterval(intervalId2);
   }, []);
-  
+
   useEffect(() => {
-    fetchAllWorkflowsCount();
-    const intervalId3 = setInterval(fetchAllWorkflowsCount, 30000);
+    fetchClosedWorkflowsData();
+    const intervalId2 = setInterval(fetchClosedWorkflowsData, 30000);
+    return () => clearInterval(intervalId2);
+  }, []);
+
+  useEffect(() => {
+    fetchicbWorkflowCounts();
+    const intervalId3 = setInterval(fetchicbWorkflowCounts, 30000);
     return () => clearInterval(intervalId3);
   }, []);
 
   useEffect(() => {
-    const fetchLacDataWithInterval = () => {
-      fetchLacPathwaysData();
+    const fetchPathwayDataWithInterval = () => {
+      fetchpathwayWorkflows(selectedPathway);
     };
-    fetchLacDataWithInterval();
-    const intervalId4 = setInterval(fetchLacDataWithInterval, 30000);
+    fetchPathwayDataWithInterval();
+    const intervalId4 = setInterval(fetchPathwayDataWithInterval, 30000);
     return () => clearInterval(intervalId4);
-  }, []);
-  const [modalPathway, setModalPathway] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenDefModal = (pathway) => {
-    setModalPathway(pathway);
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  }, [fetchpathwayWorkflows, selectedPathway]);
+  
   return (
     <div className="App">
-      <h2>Workflows Dashboard      </h2>
-      <h4>Last Update {currentTime.toLocaleTimeString()}</h4>
+      <h1>ICB Workflows Dashboard</h1>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
         <>
+        <div>
+          <PathwaysTable data={pathways} onPathwayHover={handlePathwayHover} />
+        </div>
+        <h4>Last Update {currentTime.toLocaleTimeString()}</h4>
         <div className='chart-container'>
-          <DashboardBarChart data={workflowsData} title='ICB Workflows'/>
+          <DashboardBarChart data={icbWorkflows} title='ICB Workflows'/>
         </div>
         <div className='chart-container'>
-          <DashboardBarChart data={allWorkflowsCount} title='ICB Pathway Counts' />
+          <DashboardBarChart data={icbWorkflowCounts} title='ICB Workflow Counts'/>
         </div>      
         <div className='chart-container'>
-          <DashboardBarChart data={lacPathwaysData} title='LAC Workflows' />
+          <DashboardBarChart data={pathwayWorkflows} title={selectedPathway.toUpperCase() + ' Workflows'}/>
         </div>
         <div>
-          <WorkflowTable data={openWorkflowsData} />
+          <OpenWorkflowsTable data={openWorkflowsData} />
         </div>
         <div>
-          <h5>Defined Pathways</h5>
-          <table>
-            <tbody>
-              <tr>
-                {pathways.map((pathway) => (
-                  <>
-                    <td className='escalated-false'><span onMouseEnter={() => handleOpenDefModal(pathway)}><FaEye /></span> {pathway.Value}</td>
-                  </>
-                ))}
-              </tr>
-              <tr>
-                {pathways.map((pathway) => (
-                  <td>{pathway.Text}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-          {isModalOpen && (
-            <DefinitionModal pathway={modalPathway} onClose={closeModal} />
-          )}
+          <ClosedWorkflowsTable data={closedWorkflowsData} />
         </div>
         </>
       )}
