@@ -143,8 +143,7 @@ function App() {
     <div className="App">
       <h1>
         <img src={logo} alt="Logo" className="logo" />
-
-      ICB Workflows Dashboard
+      Workflows Dashboard
       </h1>
       {loading ? (
         <p>Loading Data............</p>

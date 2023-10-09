@@ -169,8 +169,8 @@ table th {
     /* Ensure the logo doesn't exceed its container's width */
     padding: 10px;
     /* Add padding as needed */
-    width: 390px;
+    width: 330px;
     /* Set the width to your preferred size */
-    height: 90px;
+    height: 80px;
     /* Maintain the aspect ratio */
 }
