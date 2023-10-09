@@ -73,10 +73,6 @@ function ClosedWorkflowsTable({ data }) {
         Header: 'Duration',
         accessor: 'duration',
       },
-      {
-        Header: 'Time Remaining',
-        accessor: 'timeremaining',
-      },
     ],
     []
   );
