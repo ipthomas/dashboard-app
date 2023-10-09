@@ -104,29 +104,29 @@ function App() {
   };
   useEffect(() => {
     fetchicbWorkflows();
-    const intervalId1 = setInterval(fetchicbWorkflows, 30000);
+    const intervalId1 = setInterval(fetchicbWorkflows, 10000);
     return () => clearInterval(intervalId1);
   }, []);
   useEffect(() => {
     fetchPathways();
-    const intervalId1 = setInterval(fetchPathways, 30000);
+    const intervalId1 = setInterval(fetchPathways, 10000);
     return () => clearInterval(intervalId1);
   }, []);
   useEffect(() => {
     fetchOpenWorkflowsData();
-    const intervalId2 = setInterval(fetchOpenWorkflowsData, 30000);
+    const intervalId2 = setInterval(fetchOpenWorkflowsData, 10000);
     return () => clearInterval(intervalId2);
   }, []);
 
   useEffect(() => {
     fetchClosedWorkflowsData();
-    const intervalId2 = setInterval(fetchClosedWorkflowsData, 30000);
+    const intervalId2 = setInterval(fetchClosedWorkflowsData, 10000);
     return () => clearInterval(intervalId2);
   }, []);
 
   useEffect(() => {
     fetchicbWorkflowCounts();
-    const intervalId3 = setInterval(fetchicbWorkflowCounts, 30000);
+    const intervalId3 = setInterval(fetchicbWorkflowCounts, 10000);
     return () => clearInterval(intervalId3);
   }, []);
 
@@ -135,7 +135,7 @@ function App() {
       fetchpathwayWorkflows(selectedPathway);
     };
     fetchPathwayDataWithInterval();
-    const intervalId4 = setInterval(fetchPathwayDataWithInterval, 30000);
+    const intervalId4 = setInterval(fetchPathwayDataWithInterval, 10000);
     return () => clearInterval(intervalId4);
   }, [fetchpathwayWorkflows, selectedPathway]);
   
