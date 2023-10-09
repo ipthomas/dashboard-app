@@ -4,7 +4,7 @@ import OpenWorkflowsTable from './OpenWorkflowsTable';
 import ClosedWorkflowsTable from './ClosedWorkflowsTable';
 import DashboardBarChart from './DashboardBarChart';
 import PathwaysTable from './PathwaysTable';
-
+import logo from './eput.jpeg';
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [icbWorkflowCounts, setIcbWorkflowCounts] = useState({});
@@ -141,7 +141,11 @@ function App() {
   
   return (
     <div className="App">
-      <h1>ICB Workflows Dashboard</h1>
+      <h1>
+        <img src={logo} alt="Logo" className="logo" />
+
+      ICB Workflows Dashboard
+      </h1>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (

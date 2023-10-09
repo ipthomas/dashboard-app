@@ -1,3 +1,11 @@
+.hover-cell:hover {
+    background-color: orange;
+    /* Change this to the desired background color */
+    color: white;
+    /* Change this to the desired text color */
+    cursor: pointer;
+    /* Optional: Change the cursor style on hover */
+}
 textarea {
     width: 800px;
     height: 400px;
@@ -152,4 +160,17 @@ table th {
 
 .modal-content {
     padding: 10px;
+}
+.logo {
+    display: flex;
+    margin: 0 auto;
+    /* Center the logo horizontally */
+    max-width: 50%;
+    /* Ensure the logo doesn't exceed its container's width */
+    padding: 10px;
+    /* Add padding as needed */
+    width: 390px;
+    /* Set the width to your preferred size */
+    height: 90px;
+    /* Maintain the aspect ratio */
 }
