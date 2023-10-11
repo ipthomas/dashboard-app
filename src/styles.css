@@ -1,10 +1,14 @@
+.refresh-rate-container {
+    align-items: center;
+}
+
+.refresh-rate-input {
+    width: 100px;
+}
 .hover-cell:hover {
     background-color: orange;
-    /* Change this to the desired background color */
     color: white;
-    /* Change this to the desired text color */
     cursor: pointer;
-    /* Optional: Change the cursor style on hover */
 }
 textarea {
     width: 800px;

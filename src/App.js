@@ -17,6 +17,8 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedPathway, setSelectedPathway] = useState("lac");
   const [pathways, setPathways] = useState([])
+  const [refreshRate, setRefreshRate] = useState(60000);
+
 
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
@@ -105,40 +107,40 @@ function App() {
   };
   useEffect(() => {
     fetchicbWorkflows();
-    const intervalId1 = setInterval(fetchicbWorkflows, 10000);
+    const intervalId1 = setInterval(fetchicbWorkflows, refreshRate);
     return () => clearInterval(intervalId1);
-  }, []);
+  }, [refreshRate]);
   useEffect(() => {
     fetchPathways();
-    const intervalId1 = setInterval(fetchPathways, 10000);
+    const intervalId1 = setInterval(fetchPathways, refreshRate);
     return () => clearInterval(intervalId1);
-  }, []);
+  }, [refreshRate]);
   useEffect(() => {
     fetchOpenWorkflowsData();
-    const intervalId2 = setInterval(fetchOpenWorkflowsData, 10000);
+    const intervalId2 = setInterval(fetchOpenWorkflowsData, refreshRate);
     return () => clearInterval(intervalId2);
-  }, []);
+  }, [refreshRate]);
 
   useEffect(() => {
     fetchClosedWorkflowsData();
-    const intervalId2 = setInterval(fetchClosedWorkflowsData, 10000);
+    const intervalId2 = setInterval(fetchClosedWorkflowsData, refreshRate);
     return () => clearInterval(intervalId2);
-  }, []);
+  }, [refreshRate]);
 
   useEffect(() => {
     fetchicbWorkflowCounts();
-    const intervalId3 = setInterval(fetchicbWorkflowCounts, 10000);
+    const intervalId3 = setInterval(fetchicbWorkflowCounts, refreshRate);
     return () => clearInterval(intervalId3);
-  }, []);
+  }, [refreshRate]);
 
   useEffect(() => {
     const fetchPathwayDataWithInterval = () => {
       fetchpathwayWorkflows(selectedPathway);
     };
     fetchPathwayDataWithInterval();
-    const intervalId4 = setInterval(fetchPathwayDataWithInterval, 10000);
+    const intervalId4 = setInterval(fetchPathwayDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
-  }, [fetchpathwayWorkflows, selectedPathway]);
+  }, [fetchpathwayWorkflows, selectedPathway,refreshRate]);
   
   return (
     <div className="App">
@@ -146,6 +148,21 @@ function App() {
         <img src={logo} alt="Logo" className="logo" />
       Workflows Dashboard
       </h1>
+      <div className="refresh-rate-container">
+        <span>Refresh Rate </span>
+        <select
+          value={refreshRate}
+          onChange={(e) => setRefreshRate(e.target.value)}
+          className="refresh-rate-input"
+        >
+          <option value="10000">10 seconds</option>
+          <option value="30000">30 seconds</option>
+          <option value="60000">1 minute</option>
+          <option value="300000">5 minutes</option>
+          <option value="600000">10 minutes</option>
+        </select>
+      </div>
+
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
