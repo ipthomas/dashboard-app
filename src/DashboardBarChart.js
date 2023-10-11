@@ -1,29 +1,11 @@
 import React, {useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-function DashboardBarChart({ data, title, pathway, onChartHover }) {
+function DashboardBarChart({ data, title, pathway}) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
     console.log(pathway)
-    // const getDashboardCellStyle = (category) => {
-    //   switch (category) {
-    //     case 'Total':
-    //       return 'dashboard-total-cell';
-    //     case 'InProgress':
-    //       return 'dashboard-inprogress-cell';
-    //     case 'TargetMet':
-    //       return 'dashboard-targetmet-cell';
-    //     case 'TargetMissed':
-    //       return 'dashboard-targetmissed-cell';
-    //     case 'Escalated':
-    //       return 'dashboard-escalated-cell';
-    //     case 'Complete':
-    //       return 'dashboard-complete-cell';
-    //     default:
-    //       return '';
-    //   }
-    // };
     const updateChart = (data, title) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
@@ -34,24 +16,24 @@ function DashboardBarChart({ data, title, pathway, onChartHover }) {
                 {
                     label: title,
                     data: Object.values(data),
-                    backgroundColor: [
-                        'rgba(55, 255, 255, 0.2)',
-                        'rgba(150, 50, 220, 0.2)',
-                        'rgba(150, 206, 86, 0.2)',
-                        'rgba(200, 255, 50, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 255, 132, 0.2)',
-                        'rgba(0, 255, 200, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(55, 255, 255, 0.2)',
-                        'rgba(150, 50, 220, 0.2)',
-                        'rgba(150, 206, 86, 0.2)',
-                        'rgba(200, 255, 50, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 255, 132, 0.2)',
-                        'rgba(0, 255, 200, 0.2)',
-                    ],
+                    // backgroundColor: [
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(55, 255, 255, 0.2)',
+                    // ],
+                    // borderColor: [
+                    //     'rgba(55, 255, 255, 0.2)',
+                    //     'rgba(150, 50, 220, 0.2)',
+                    //     'rgba(150, 206, 86, 0.2)',
+                    //     'rgba(200, 255, 50, 0.2)',
+                    //     'rgba(54, 162, 235, 0.2)',
+                    //     'rgba(54, 255, 132, 0.2)',
+                    //     'rgba(0, 255, 200, 0.2)',
+                    // ],
                     borderWidth: 1, 
                 },
             ],

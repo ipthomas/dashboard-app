@@ -4,7 +4,8 @@ import OpenWorkflowsTable from './OpenWorkflowsTable';
 import ClosedWorkflowsTable from './ClosedWorkflowsTable';
 import DashboardBarChart from './DashboardBarChart';
 import PathwaysTable from './PathwaysTable';
-import logo from './eput.jpeg';
+import logo from './eput-logo.jpeg';
+
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [icbWorkflowCounts, setIcbWorkflowCounts] = useState({});
