@@ -9,7 +9,7 @@ function PathwaysTable({ data, onPathwayHover }) {
           {data.map((pwy) => (
             <td
               key={pwy.Text}
-              onMouseEnter={() => onPathwayHover(pwy.Value)}
+              onClick={() => onPathwayHover(pwy.Value)}
               className="hover-cell" // Add a CSS class for hover effect
             >
               {pwy.Text}

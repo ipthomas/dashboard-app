@@ -21,28 +21,28 @@ function OpenWorkflowsTable({ data }) {
         Header: 'Tasks',
         accessor: 'taskdetails',
         Cell: ({ row }) => (
-          <span onMouseEnter={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+          <span onClick={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
         ),
       },
       {
         Header: 'Definition',
         accessor: 'pathway',
         Cell: ({ row }) => (
-          <span onMouseEnter={() => handleOpenDefinitionModal(row.values.pathway)}><FaEye /></span>
+          <span onClick={() => handleOpenDefinitionModal(row.values.pathway)}><FaEye /></span>
         ),
       },
       {
         Header: 'Events',
         accessor: 'eventdetails',
         Cell: ({ row }) => (
-          <span onMouseEnter={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+          <span onClick={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
         ),
       },
       {
         Header: 'Patient',
         accessor: 'patientdetails',
         Cell: ({ row }) => (
-          <span onMouseEnter={() => handleOpenPatientModal(row.values.nhsid)}><FaEye /></span>
+          <span onClick={() => handleOpenPatientModal(row.values.nhsid)}><FaEye /></span>
         ),
       },
       {
