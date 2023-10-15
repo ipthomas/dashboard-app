@@ -23,7 +23,7 @@ function App() {
   const setCalendarMode = async (mode) => {
     setCalMode(mode)
     //fetch(`http://localhost:8080/api/admin/calendarmode?user=workflow&org=icb&role=broker&operation=${mode}`);
-    fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&operation=${mode}`);     
+    fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/admin/calendarmode?user=workflow&org=icb&role=broker&operation=${mode}`);     
   };
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
