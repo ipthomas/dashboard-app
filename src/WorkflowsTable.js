@@ -99,10 +99,6 @@ function WorkflowsTable({ data, type }) {
         accessor: 'lastupdate',
       },
       {
-        Header: 'Due Date',
-        accessor: 'completeby',
-      },
-      {
         Header: 'Time Remaining',
         accessor: 'timeremaining',
       },

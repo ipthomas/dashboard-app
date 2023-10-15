@@ -59,7 +59,7 @@ function ClosedWorkflowsTable({ data }) {
     () => [
       {
         Header: 'Tasks',
-        accessor: 'version',
+        accessor: 'vers',
         Cell: ({ row }) => (
           <span onClick={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid, row.values.version)}><FaEye /></span>
         ),
@@ -90,8 +90,8 @@ function ClosedWorkflowsTable({ data }) {
         accessor: 'nhsid',
       },
       {
-        Header: 'Owner',
-        accessor: 'owner',
+        Header: 'Version',
+        accessor: 'version',
       },
       {
         Header: 'Created',
@@ -100,10 +100,6 @@ function ClosedWorkflowsTable({ data }) {
       {
         Header: 'Updated',
         accessor: 'lastupdate',
-      },
-      {
-        Header: 'Due Date',
-        accessor: 'completeby',
       },
       {
         Header: 'Duration',
@@ -131,7 +127,7 @@ function ClosedWorkflowsTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'pathway', desc: false }],
+        sortBy: [{ id: 'version', desc: false }],
       },
     },
     useSortBy
