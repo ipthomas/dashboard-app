@@ -5,17 +5,19 @@ function PathwaysTable({ data, onPathwayHover }) {
   return (
     <div>
       <table>
-        <tbody>
-          {data.map((pwy) => (
-            <td
-              key={pwy.Text}
-              onClick={() => onPathwayHover(pwy.Value)}
-              className="hover-cell" // Add a CSS class for hover effect
-            >
-              {pwy.Text}
-            </td>
-          ))}
-        </tbody>
+        <thead>
+          <tr>
+            {data.map((pwy) => (
+              <th
+                key={pwy.Text}
+                onClick={() => onPathwayHover(pwy.Value)}
+                className="hover-cell"
+              >
+                {pwy.Text}
+              </th>
+            ))}
+          </tr>
+        </thead>
       </table>
     </div>
   );

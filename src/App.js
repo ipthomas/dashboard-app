@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
-import OpenWorkflowsTable from './OpenWorkflowsTable';
+import WorkflowsTable from './WorkflowsTable';
 import ClosedWorkflowsTable from './ClosedWorkflowsTable';
 import DashboardBarChart from './DashboardBarChart';
 import PathwaysTable from './PathwaysTable';
@@ -10,19 +10,25 @@ function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [icbWorkflowCounts, setIcbWorkflowCounts] = useState({});
   const [icbWorkflows, setIcbWorkflows] = useState({});
-  const [pathwayWorkflows, setPathwayWorkflows] = useState([]);
+  const [dashboardData, setDashboardData] = useState([]);
   const [openWorkflowsData, setOpenWorkflowsData] = useState([]);
   const [closedWorkflowsData, setClosedWorkflowsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedPathway, setSelectedPathway] = useState("lac");
+  const [selectedPathway, setSelectedPathway] = useState("plac");
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
+  const [calmode, setCalMode] = useState("calendardays");
 
-
+  const setCalendarMode = async (mode) => {
+    setCalMode(mode)
+    //fetch(`http://localhost:8080/api/admin/calendarmode?user=workflow&org=icb&role=broker&operation=${mode}`);
+    fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&operation=${mode}`);     
+  };
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
     try {
+      // const workflowsresponse = await fetch(`http://localhost:8080/api/state/dashboard?user=workflow&org=icb&role=broker`);
       const workflowsresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker`);
       if (!workflowsresponse.ok) {
         throw new Error('Network response was not ok');
@@ -39,6 +45,7 @@ function App() {
   
   const fetchicbWorkflowCounts = async () => {
     try {
+      // const workflowsCountResponse = await fetch(`http://localhost:8080/api/state/workflows/count?user=workflow&org=icb&role=broker`);
       const workflowsCountResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows/count?user=workflow&org=icb&role=broker`);
       if (!workflowsCountResponse.ok) {
         throw new Error('Network response was not ok');
@@ -52,6 +59,7 @@ function App() {
   };
   const fetchPathways = async () => {
     try {
+      // const pathwaysResponse = await fetch(`http://localhost:8080/api/state/pathways?user=workflow&org=icb&role=broker`);
       const pathwaysResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/pathways?user=workflow&org=icb&role=broker`);
       if (!pathwaysResponse.ok) {
         throw new Error('Network response was not ok');
@@ -63,22 +71,24 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
-  const fetchpathwayWorkflows = useCallback(async (selectedPathway) => {
+  const fetchDashboardData = useCallback(async (selectedPathway) => {
     try {
-      const pathwaysresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
-      if (!pathwaysresponse.ok) {
+      // const dashboardresponse = await fetch(`http://localhost:8080/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
+      const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
+      if (!dashboardresponse.ok) {
         throw new Error('Network response was not ok');
       }
-      const pathwaysresult = await pathwaysresponse.json();
-      setPathwayWorkflows(pathwaysresult);
+      const dashboardresult = await dashboardresponse.json();
+      setDashboardData(dashboardresult);
     } catch (error) {
       setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
   }, []);
-  const fetchClosedWorkflowsData = async () => {
+  const fetchClosedWorkflowsData = useCallback(async (selectedPathway) => {
     try {
-      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED`);
+      // const wfresponse = await fetch(`http://localhost:8080/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED&pathway=${selectedPathway}`);
+      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED&pathway=${selectedPathway}`);
       if (!wfresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -88,10 +98,11 @@ function App() {
       setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
-  };
-  const fetchOpenWorkflowsData = async () => {
+  },[]);
+  const fetchOpenWorkflowsData = useCallback(async (selectedPathway) => {
     try {
-      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN`);
+      // const wfresponse = await fetch(`http://localhost:8080/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN&pathway=${selectedPathway}`);
+      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN&pathway=${selectedPathway}`);
       if (!wfresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -101,7 +112,7 @@ function App() {
       setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
-  };
+  }, []);
   const handlePathwayHover = (selectedPathway) => {
     setSelectedPathway(selectedPathway);
   };
@@ -112,35 +123,40 @@ function App() {
   }, [refreshRate]);
   useEffect(() => {
     fetchPathways();
-    const intervalId1 = setInterval(fetchPathways, refreshRate);
-    return () => clearInterval(intervalId1);
-  }, [refreshRate]);
-  useEffect(() => {
-    fetchOpenWorkflowsData();
-    const intervalId2 = setInterval(fetchOpenWorkflowsData, refreshRate);
+    const intervalId2 = setInterval(fetchPathways, refreshRate);
     return () => clearInterval(intervalId2);
   }, [refreshRate]);
-
   useEffect(() => {
-    fetchClosedWorkflowsData();
-    const intervalId2 = setInterval(fetchClosedWorkflowsData, refreshRate);
-    return () => clearInterval(intervalId2);
-  }, [refreshRate]);
+    const fetchOpenWorkflowsDataWithInterval = () => {
+      fetchOpenWorkflowsData(selectedPathway);
+    };
+    fetchOpenWorkflowsDataWithInterval();
+    const intervalId4 = setInterval(fetchOpenWorkflowsDataWithInterval, refreshRate);
+    return () => clearInterval(intervalId4);
+  }, [fetchOpenWorkflowsData, selectedPathway, refreshRate, calmode]);
+  useEffect(() => {
+    const fetchClosedWorkflowsDataWithInterval = () => {
+      fetchClosedWorkflowsData(selectedPathway);
+    };
+    fetchClosedWorkflowsDataWithInterval();
+    const intervalId4 = setInterval(fetchClosedWorkflowsDataWithInterval, refreshRate);
+    return () => clearInterval(intervalId4);
+  }, [fetchClosedWorkflowsData, selectedPathway, refreshRate, calmode]);
 
   useEffect(() => {
     fetchicbWorkflowCounts();
-    const intervalId3 = setInterval(fetchicbWorkflowCounts, refreshRate);
-    return () => clearInterval(intervalId3);
+    const intervalId5 = setInterval(fetchicbWorkflowCounts, refreshRate);
+    return () => clearInterval(intervalId5);
   }, [refreshRate]);
 
   useEffect(() => {
-    const fetchPathwayDataWithInterval = () => {
-      fetchpathwayWorkflows(selectedPathway);
+    const fetchDashboardDataWithInterval = () => {
+      fetchDashboardData(selectedPathway);
     };
-    fetchPathwayDataWithInterval();
-    const intervalId4 = setInterval(fetchPathwayDataWithInterval, refreshRate);
+    fetchDashboardDataWithInterval();
+    const intervalId4 = setInterval(fetchDashboardDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
-  }, [fetchpathwayWorkflows, selectedPathway,refreshRate]);
+  }, [fetchDashboardData, selectedPathway,refreshRate]);
   
   return (
     <div className="App">
@@ -151,6 +167,7 @@ function App() {
       <div className="refresh-rate-container">
         <span>Refresh Rate </span>
         <select
+          name='refreshrate'
           value={refreshRate}
           onChange={(e) => setRefreshRate(e.target.value)}
           className="refresh-rate-input"
@@ -162,9 +179,18 @@ function App() {
           <option value="600000">10 minutes</option>
           <option value="1800000">30 minutes</option>
           <option value="3600000">1 hour</option>
+        </select>   
+        <span> Calendar Mode </span>
+        <select
+          name='calendarmode'
+          value={calmode}
+          onChange={(e) => setCalendarMode(e.target.value)}
+          className="calendar-mode-input"
+        >
+          <option value="workingdays">Working Days</option>
+          <option value="calendardays">Calendar Days</option>
         </select>
       </div>
-
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
@@ -175,21 +201,49 @@ function App() {
           <PathwaysTable data={pathways} onPathwayHover={handlePathwayHover} />
         </div>
         <h4>Last Update {currentTime.toLocaleTimeString()}</h4>
-        <div className='chart-container'>
-          <DashboardBarChart data={icbWorkflows} title='ICB Workflows'/>
-        </div>
+        {icbWorkflows !== null ? 
+          (
+          <div className='chart-container'> 
+            <DashboardBarChart data={icbWorkflows} title='ICB Workflows'/>         
+          </div>
+          ) : 
+          <div>
+            <p>No ICB Workflows</p>
+          </div>
+        }
         <div className='chart-container'>
           <DashboardBarChart data={icbWorkflowCounts} title='ICB Workflow Counts'/>
-        </div>      
-        <div className='chart-container'>
-          <DashboardBarChart data={pathwayWorkflows} title={selectedPathway.toUpperCase() + ' Workflows'}/>
         </div>
-        <div>
-          <OpenWorkflowsTable data={openWorkflowsData} />
-        </div>
-        <div>
-          <ClosedWorkflowsTable data={closedWorkflowsData} />
-        </div>
+        {dashboardData !==null ?
+          (
+          <div className='chart-container'>
+            <DashboardBarChart data={dashboardData} title={selectedPathway.toUpperCase() + ' Workflows'}/>
+          </div>
+          ) :
+          <div>
+              <p>No {selectedPathway} Workflows</p>
+          </div>
+        }
+        {openWorkflowsData !== null ?
+          (
+            <div>
+              <WorkflowsTable data={openWorkflowsData} type={'In Progress'}/>
+            </div>
+          ) :
+          <div>
+            <p>No Open Workflows</p>
+          </div>
+        }
+        {closedWorkflowsData !== null ?
+          (
+          <div>
+            <ClosedWorkflowsTable data={closedWorkflowsData} />
+          </div>
+          ) :
+          <div>
+            <p>No Closed Workflows</p>
+          </div>
+        }
         </>
       )}
     </div>

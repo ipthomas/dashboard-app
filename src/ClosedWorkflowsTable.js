@@ -8,20 +8,60 @@ import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
 function ClosedWorkflowsTable({ data }) {
+  const [tasksModalPathway, setTasksModalPathway] = useState(null);
+  const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
+  const [tasksModalNhs, setTasksModalNhs] = useState(null);
+  const [tasksModalVersion, setTasksModalVersion] = useState(null);
+  const [eventsModalPathway, setEventsModalPathway] = useState(null);
+  const [definitionModalPathway, setDefinitionModalPathway] = useState(null);
+  const [isEventsModalOpen, setIsEventsModalOpen] = useState(false);
+  const [eventsModalNhs, setEventsModalNhs] = useState(null);
+  const [eventsModalVer, setEventsModalVer] = useState(null);
+  const [patientModalNhs, setPatientModalNhs] = useState(null);
+  const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
+  const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
+  const handleOpenTasksModal = (pathway, nhs, version) => {
+    setTasksModalPathway(pathway);
+    setTasksModalNhs(nhs)
+    setTasksModalVersion(version)
+    setIsTasksModalOpen(true);
+  };
+  console.log(tasksModalVersion)
+  const handleOpenPatientModal = (nhs) => {
+    setPatientModalNhs(nhs)
+    setIsPatientModalOpen(true);
+  };
+  const handleOpenEventsModal = (pathway, nhs, version) => {
+    setEventsModalPathway(pathway);
+    setEventsModalNhs(nhs)
+    setEventsModalVer(version)
+    setIsEventsModalOpen(true);
+  };
+  console.log(eventsModalVer)
+  const handleOpenDefinitionModal = (pathway) => {
+    setDefinitionModalPathway(pathway);
+    setIsDefinitionModalOpen(true);
+  };
+  const closeTasksModal = () => {
+    setIsTasksModalOpen(false);
+  };
+  const closeEventsModal = () => {
+    setIsEventsModalOpen(false);
+  };
+  const closePatientModal = () => {
+    setIsPatientModalOpen(false);
+  };
+  const closeDefinitionModal = () => {
+    setIsDefinitionModalOpen(false);
+  };
+
   const columns = useMemo(
     () => [
       {
-        Header: 'Pathway',
-        accessor: 'pwy',
-        Cell: ({ row }) => (
-          row.values.pathway.toUpperCase()
-        ),
-      },
-      {
         Header: 'Tasks',
-        accessor: 'taskdetails',
+        accessor: 'version',
         Cell: ({ row }) => (
-          <span onClick={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+          <span onClick={() => handleOpenTasksModal(row.values.pathway, row.values.nhsid, row.values.version)}><FaEye /></span>
         ),
       },
       {
@@ -33,9 +73,9 @@ function ClosedWorkflowsTable({ data }) {
       },
       {
         Header: 'Events',
-        accessor: 'eventdetails',
+        accessor: 'ver',
         Cell: ({ row }) => (
-          <span onClick={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid)}><FaEye /></span>
+          <span onClick={() => handleOpenEventsModal(row.values.pathway, row.values.nhsid, row.values.version)}><FaEye /></span>
         ),
       },
       {
@@ -50,16 +90,24 @@ function ClosedWorkflowsTable({ data }) {
         accessor: 'nhsid',
       },
       {
-        Header: 'Due Date',
-        accessor: 'completeby',
+        Header: 'Owner',
+        accessor: 'owner',
+      },
+      {
+        Header: 'Created',
+        accessor: 'created',
       },
       {
         Header: 'Updated',
         accessor: 'lastupdate',
       },
       {
-        Header: 'Owner',
-        accessor: 'owner',
+        Header: 'Due Date',
+        accessor: 'completeby',
+      },
+      {
+        Header: 'Duration',
+        accessor: 'duration',
       },
       {
         Header: 'Overdue',
@@ -68,10 +116,6 @@ function ClosedWorkflowsTable({ data }) {
       {
         Header: 'Escalated',
         accessor: 'escalated',
-      },
-      {
-        Header: 'Duration',
-        accessor: 'duration',
       },
     ],
     []
@@ -92,94 +136,56 @@ function ClosedWorkflowsTable({ data }) {
     },
     useSortBy
   );
-  
-  const [tasksModalPathway, setTasksModalPathway] = useState(null);
-  const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
-  const [tasksModalNhs, setTasksModalNhs] = useState(null);
-  const [eventsModalPathway, setEventsModalPathway] = useState(null);
-  const [definitionModalPathway, setDefinitionModalPathway] = useState(null);
-  const [isEventsModalOpen, setIsEventsModalOpen] = useState(false);
-  const [eventsModalNhs, setEventsModalNhs] = useState(null);
-  const [patientModalNhs, setPatientModalNhs] = useState(null);
-  const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
-  const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
-
-  const handleOpenTasksModal = (pathway,nhs) => {
-    setTasksModalPathway(pathway);
-    setTasksModalNhs(nhs)
-    setIsTasksModalOpen(true);
-  };
-  const handleOpenPatientModal = (nhs) => {
-    setPatientModalNhs(nhs)
-    setIsPatientModalOpen(true);
-  };
-  const handleOpenEventsModal = (pathway, nhs) => {
-    setEventsModalPathway(pathway);
-    setEventsModalNhs(nhs)
-    setIsEventsModalOpen(true);
-  };
-  const handleOpenDefinitionModal = (pathway) => {
-    setDefinitionModalPathway(pathway);
-    setIsDefinitionModalOpen(true);
-  };
-  const closeTasksModal = () => {
-    setIsTasksModalOpen(false);
-  };
-  const closeEventsModal = () => {
-    setIsEventsModalOpen(false);
-  };
-  const closePatientModal = () => {
-    setIsPatientModalOpen(false);
-  };
-  const closeDefinitionModal = () => {
-    setIsDefinitionModalOpen(false);
-  };
   return (
     <div>
-      <h5>ICB Closed Workflows</h5>
-      <
-        table {...getTableProps()} style={{
-          borderCollapse: 'collapse',
-          fontSize: 'small',
-          fontFamily: 'Open Sans'
-        }}
-      >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr className='table' {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            const escalatedValue = row.values.escalated;
-            const overdueValue = row.values.overdue;
-            const rowClassName = overdueValue === 'FALSE' ? 'escalated-false': escalatedValue === 'FALSE' ? 'overdue-true':'escalated-true';
-            return (
-              <tr {...row.getRowProps()} className={rowClassName}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+      <h5>Closed Workflows</h5>
+      {data.length === 0 ? (
+        <p>No Closed Workflows Available</p>
+      ) : (
+        <table
+          {...getTableProps()}
+          style={{
+            borderCollapse: 'collapse',
+            fontSize: 'small',
+            fontFamily: 'Open Sans',
+          }}
+        >
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr className='table' {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    </span>
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table
-      >
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              const escalatedValue = row.values.escalated;
+              const overdueValue = row.values.overdue;
+              const rowClassName = overdueValue === 'FALSE' ? 'escalated-false' : escalatedValue === 'FALSE' ? 'overdue-true' : 'escalated-true';
+              return (
+                <tr {...row.getRowProps()} className={rowClassName}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
       {isTasksModalOpen && (
-        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} onClose={closeTasksModal}/>
+        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} version={tasksModalVersion} onClose={closeTasksModal} />
       )}
       {isEventsModalOpen && (
-        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} onClose={closeEventsModal} />
+        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} version={eventsModalVer} onClose={closeEventsModal} />
       )}
       {isPatientModalOpen && (
         <PatientModal nhs={patientModalNhs} onClose={closePatientModal} />

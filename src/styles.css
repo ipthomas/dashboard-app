@@ -139,15 +139,12 @@ table th {
 
 .modal {
     background: white;
-    border-radius: 25px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     font-family: 'Open Sans';
     font-size: small;
 }
 
 .modal-header {
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
     background: rgba(216, 222, 225, 0.2);
     color: white;
     display: flex;
@@ -155,16 +152,12 @@ table th {
 
 .close-button {
     background: rgba(216, 222, 225, 0.01);
-    border-radius: 25%;
     border: none;
     color: rgb(211, 5, 5);
     font-size: 40px;
     cursor: pointer;
 }
 
-.modal-content {
-    padding: 10px;
-}
 .logo {
     display: flex;
     margin: 0 auto;

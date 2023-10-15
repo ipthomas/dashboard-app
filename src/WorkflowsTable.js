@@ -7,7 +7,7 @@ import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
-function OpenWorkflowsTable({ data }) {
+function WorkflowsTable({ data, type }) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
@@ -53,15 +53,7 @@ function OpenWorkflowsTable({ data }) {
     setIsDefinitionModalOpen(false);
   };
   
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Pathway',
-        accessor: 'pwy',
-        Cell: ({ row }) => (
-          row.values.pathway.toUpperCase()
-        ),
-      },
+  const columns = useMemo(() => [
       {
         Header: 'Tasks',
         accessor: 'version',
@@ -149,15 +141,15 @@ function OpenWorkflowsTable({ data }) {
   
   return (
     <div>
-      <h5>ICB In Progress Workflows</h5>
+      <h5>{type} Workflows</h5>
       {data.length === 0 ? (
-        <p>No open workflows available.</p>
+        <p>No {type} Workflows Available</p>
       ) : (
         <table
           {...getTableProps()}
           style={{
             borderCollapse: 'collapse',
-            fontSize: '14px',
+            fontSize: 'small',
             fontFamily: 'Open Sans',
           }}
         >
@@ -208,4 +200,4 @@ function OpenWorkflowsTable({ data }) {
   );
 }
 
-export default OpenWorkflowsTable;
+export default WorkflowsTable;

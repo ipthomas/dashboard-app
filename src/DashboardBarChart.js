@@ -5,7 +5,6 @@ function DashboardBarChart({ data, title, pathway}) {
     
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
-    console.log(pathway)
     const updateChart = (data, title) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();

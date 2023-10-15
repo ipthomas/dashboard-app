@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-function EventsModal({ pathway, nhs, onClose }) {
+function EventsModal({ pathway, nhs, version, onClose }) {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/events?vers=1&user=ian.thomas&org=tiani-spirit&role=clinical&vers=1&pathway=${pathway}&nhs=${nhs}`);
+                const response = await fetch(`http://localhost:8080/api/state/events?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}&vers=${version}`);
+                // const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/events?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}&vers=${version}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -21,24 +22,25 @@ function EventsModal({ pathway, nhs, onClose }) {
         };
 
         fetchData();
-    }, [pathway, nhs]);
+    }, [pathway, nhs, version]);
 
     return (
         <div className="modal-overlay">
             <div className="modal">
-                {loading ? (
-                    <p>Loading events...</p>
-                ) : (
-                <>
                 <div className="modal-header">
                     <button className="close-button" onClick={onClose}>
                         &times;
                     </button>
-                    <h3>NHS ID {nhs} {pathway} Workflow Events</h3>
                 </div>
                 <div className="modal-content">
+                    {loading ? (
+                        <p>Loading tasks...</p>
+                    ) : (
                     <table className='modal-table'>
                             <thead>
+                                <tr>
+                                    <th colSpan={12}>NHS ID {nhs} {pathway} Workflow Events</th>
+                                </tr>
                                 <tr>
                                     <th>ID</th>
                                     <th>Event Time</th>
@@ -61,9 +63,8 @@ function EventsModal({ pathway, nhs, onClose }) {
                                 ))}
                             </tbody>
                         </table>                   
+                    )}
                 </div>
-                </>
-                )}
             </div>
         </div>
     );
