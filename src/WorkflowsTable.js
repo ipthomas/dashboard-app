@@ -103,10 +103,6 @@ function WorkflowsTable({ data, type }) {
         accessor: 'completeby',
       },
       {
-        Header: 'Duration',
-        accessor: 'duration',
-      },
-      {
         Header: 'Time Remaining',
         accessor: 'timeremaining',
       },
