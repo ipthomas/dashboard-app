@@ -18,10 +18,25 @@ function App() {
   const [selectedPathway, setSelectedPathway] = useState("plac");
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
-  const [qotd, setQotd] = useState()
   // const serverUrl = 'http://localhost:8080/'
   const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
   
+  const quoteOfTheDay = async () => {
+    try {
+      const qotdResponse = await fetch(serverUrl + `api/qotd`);
+      if (!qotdResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await qotdResponse.json();
+      result.map((tftd) => {
+        alert(tftd.q + " " + tftd.a)
+      }) 
+    } catch (error) {
+      setError('Error fetching data. Please try again later.');
+      console.error('Error fetching data:', error);
+    }
+    
+  };
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
     try {
@@ -148,18 +163,6 @@ function App() {
     const intervalId4 = setInterval(fetchDashboardDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
   }, [fetchDashboardData, selectedPathway,refreshRate]);
-  const quoteOfTheDay = async () => {
-    try {
-      const qotdResponse = await fetch('https://zenquotes.io/api/random');
-      if (!qotdResponse.ok) {
-        throw new Error('Network response was not ok');
-      }
-      setQotd(qotdResponse);
-      alert(qotd.q)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }; 
   return (
     <div className="App">
       <h1>
