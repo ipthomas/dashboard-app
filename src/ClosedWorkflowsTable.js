@@ -124,6 +124,10 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
         accessor: 'version',
       },
       {
+        Header: 'Overdue',
+        accessor: 'overdue',
+      },
+      {
         Header: 'Created',
         accessor: 'created',
         Cell: ({ row }) => (
@@ -141,10 +145,6 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
         Header: 'Duration',
         accessor: 'duration',
       },
-      {
-        Header: 'Overdue',
-        accessor: 'overdue',
-      },
     ],
     []
   );
@@ -159,7 +159,7 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'created', desc: false }],
+        sortBy: [{ id: 'version', desc: false }],
       },
     },
     useSortBy
