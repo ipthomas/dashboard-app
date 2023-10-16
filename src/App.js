@@ -18,6 +18,7 @@ function App() {
   const [selectedPathway, setSelectedPathway] = useState("plac");
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
+  const [qotd, setQotd] = useState()
   // const serverUrl = 'http://localhost:8080/'
   const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
   
@@ -147,11 +148,22 @@ function App() {
     const intervalId4 = setInterval(fetchDashboardDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
   }, [fetchDashboardData, selectedPathway,refreshRate]);
-  
+  const quoteOfTheDay = async () => {
+    try {
+      const qotdResponse = await fetch('https://zenquotes.io/api/random');
+      if (!qotdResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setQotd(qotdResponse);
+      alert(qotd.q)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }; 
   return (
     <div className="App">
       <h1>
-        <img src={logo} alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" onClick={quoteOfTheDay}/>
       Workflows Dashboard
       </h1>
       <div className="refresh-rate-container">
