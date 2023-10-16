@@ -195,13 +195,12 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              const escalatedValue = row.values.escalated;
               const overdueValue = row.values.overdue;
-              const rowClassName = overdueValue === 'FALSE' ? 'escalated-false' : escalatedValue === 'FALSE' ? 'overdue-true' : 'escalated-true';
+              const rowClassName = overdueValue === 'TRUE' ? 'overdue-true' : null;
               return (
-                <tr {...row.getRowProps()} className={rowClassName}>
+                <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td className={rowClassName} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   ))}
                 </tr>
               );

@@ -28,15 +28,15 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const result = await qotdResponse.json();
-      result.map((tftd) => {
-        alert(tftd.q + " " + tftd.a)
-      }) 
+
+      result.forEach((tftd) => {
+        alert(tftd.q + " " + tftd.a);
+      });
     } catch (error) {
-      setError('Error fetching data. Please try again later.');
       console.error('Error fetching data:', error);
     }
-    
   };
+
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
     try {
