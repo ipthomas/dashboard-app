@@ -18,18 +18,13 @@ function App() {
   const [selectedPathway, setSelectedPathway] = useState("plac");
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
-  const [calmode, setCalMode] = useState("calendardays");
-
-  const setCalendarMode = async (mode) => {
-    setCalMode(mode)
-    //fetch(`http://localhost:8080/api/admin/calendarmode?user=workflow&org=icb&role=broker&operation=${mode}`);
-    fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/admin/calendarmode?user=workflow&org=icb&role=broker&operation=${mode}`);     
-  };
+  // const serverUrl = 'http://localhost:8080/'
+  const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
+  
   const fetchicbWorkflows = async () => {
     setCurrentTime(new Date());
     try {
-      // const workflowsresponse = await fetch(`http://localhost:8080/api/state/dashboard?user=workflow&org=icb&role=broker`);
-      const workflowsresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker`);
+      const workflowsresponse = await fetch(serverUrl + `api/state/dashboard?user=workflow&org=icb&role=broker`);
       if (!workflowsresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -45,8 +40,7 @@ function App() {
   
   const fetchicbWorkflowCounts = async () => {
     try {
-      // const workflowsCountResponse = await fetch(`http://localhost:8080/api/state/workflows/count?user=workflow&org=icb&role=broker`);
-      const workflowsCountResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows/count?user=workflow&org=icb&role=broker`);
+      const workflowsCountResponse = await fetch(serverUrl + `api/state/workflows/count?user=workflow&org=icb&role=broker`);
       if (!workflowsCountResponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -59,8 +53,7 @@ function App() {
   };
   const fetchPathways = async () => {
     try {
-      // const pathwaysResponse = await fetch(`http://localhost:8080/api/state/pathways?user=workflow&org=icb&role=broker`);
-      const pathwaysResponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/pathways?user=workflow&org=icb&role=broker`);
+      const pathwaysResponse = await fetch(serverUrl + `api/state/pathways?user=workflow&org=icb&role=broker`);
       if (!pathwaysResponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -73,8 +66,7 @@ function App() {
   };
   const fetchDashboardData = useCallback(async (selectedPathway) => {
     try {
-      // const dashboardresponse = await fetch(`http://localhost:8080/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
-      const dashboardresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
+      const dashboardresponse = await fetch(serverUrl +`api/state/dashboard?user=workflow&org=icb&role=broker&pathway=${selectedPathway}`);
       if (!dashboardresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -87,8 +79,7 @@ function App() {
   }, []);
   const fetchClosedWorkflowsData = useCallback(async (selectedPathway) => {
     try {
-      // const wfresponse = await fetch(`http://localhost:8080/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED&pathway=${selectedPathway}`);
-      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED&pathway=${selectedPathway}`);
+      const wfresponse = await fetch(serverUrl +`api/state/workflows?user=workflow&org=icb&role=broker&status=CLOSED&pathway=${selectedPathway}`);
       if (!wfresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -101,8 +92,7 @@ function App() {
   },[]);
   const fetchOpenWorkflowsData = useCallback(async (selectedPathway) => {
     try {
-      // const wfresponse = await fetch(`http://localhost:8080/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN&pathway=${selectedPathway}`);
-      const wfresponse = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN&pathway=${selectedPathway}`);
+      const wfresponse = await fetch(serverUrl +`api/state/workflows?user=workflow&org=icb&role=broker&status=OPEN&pathway=${selectedPathway}`);
       if (!wfresponse.ok) {
         throw new Error('Network response was not ok');
       }
@@ -133,7 +123,7 @@ function App() {
     fetchOpenWorkflowsDataWithInterval();
     const intervalId4 = setInterval(fetchOpenWorkflowsDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
-  }, [fetchOpenWorkflowsData, selectedPathway, refreshRate, calmode]);
+  }, [fetchOpenWorkflowsData, selectedPathway, refreshRate]);
   useEffect(() => {
     const fetchClosedWorkflowsDataWithInterval = () => {
       fetchClosedWorkflowsData(selectedPathway);
@@ -141,7 +131,7 @@ function App() {
     fetchClosedWorkflowsDataWithInterval();
     const intervalId4 = setInterval(fetchClosedWorkflowsDataWithInterval, refreshRate);
     return () => clearInterval(intervalId4);
-  }, [fetchClosedWorkflowsData, selectedPathway, refreshRate, calmode]);
+  }, [fetchClosedWorkflowsData, selectedPathway, refreshRate]);
 
   useEffect(() => {
     fetchicbWorkflowCounts();
@@ -179,16 +169,6 @@ function App() {
           <option value="600000">10 minutes</option>
           <option value="1800000">30 minutes</option>
           <option value="3600000">1 hour</option>
-        </select>   
-        <span> Calendar Mode </span>
-        <select
-          name='calendarmode'
-          value={calmode}
-          onChange={(e) => setCalendarMode(e.target.value)}
-          className="calendar-mode-input"
-        >
-          <option value="workingdays">Working Days</option>
-          <option value="calendardays">Calendar Days</option>
         </select>
       </div>
       {loading ? (
@@ -227,7 +207,7 @@ function App() {
         {openWorkflowsData !== null ?
           (
             <div>
-              <WorkflowsTable data={openWorkflowsData} type={'In Progress'}/>
+              <WorkflowsTable data={openWorkflowsData} titlePrefix={'In Progress'} serverUrl={serverUrl}/>
             </div>
           ) :
           <div>
@@ -237,7 +217,7 @@ function App() {
         {closedWorkflowsData !== null ?
           (
           <div>
-            <ClosedWorkflowsTable data={closedWorkflowsData} />
+            <ClosedWorkflowsTable data={closedWorkflowsData} serverUrl={serverUrl} />
           </div>
           ) :
           <div>

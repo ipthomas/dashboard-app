@@ -7,7 +7,7 @@ import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
-function WorkflowsTable({ data, type }) {
+function WorkflowsTable({ data, titlePrefix, serverUrl }) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
@@ -20,6 +20,38 @@ function WorkflowsTable({ data, type }) {
   const [patientModalNhs, setPatientModalNhs] = useState(null);
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
+  const formatToLocalUKTime = (dateString) => {
+    if (dateString === "" || dateString === "0001-01-01 00:00:00 +0000 UTC") {
+      return ""; // Return an empty string
+    }
+    try {
+      const regex = /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+\-\d]{5}) (.+)/;
+      const match = dateString.match(regex);
+
+      if (match) {
+        const yearMonthDay = match[1];
+        const time = match[2];
+        const offset = match[3];
+        const newDateString = `${yearMonthDay}T${time}${offset}`;
+        const date = new Date(newDateString);
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+        const formattedDate = date.toLocaleString('en-GB', options);
+        return formattedDate;
+      }
+    } catch (error) {
+      console.error('Error formatting date:', error);
+    }
+
+    return "";
+  };
   const handleOpenTasksModal = (pathway, nhs, version) => {
     setTasksModalPathway(pathway);
     setTasksModalNhs(nhs)
@@ -87,28 +119,40 @@ function WorkflowsTable({ data, type }) {
         accessor: 'nhsid',
       },
       {
-        Header: 'Owner',
-        accessor: 'owner',
-      },
-      {
-        Header: 'Created',
-        accessor: 'created',
-      },
-      {
-        Header: 'Updated',
-        accessor: 'lastupdate',
-      },
-      {
-        Header: 'Time Remaining',
-        accessor: 'timeremaining',
-      },
-      {
         Header: 'Overdue',
         accessor: 'overdue',
       },
       {
         Header: 'Escalated',
         accessor: 'escalated',
+      },
+      {
+        Header: 'Owner',
+        accessor: 'owner',
+      },
+      {
+        Header: 'Created',
+        accessor: 'created',
+        Cell: ({ row }) => (
+          formatToLocalUKTime(row.values.created)
+        ),
+      },
+      {
+        Header: 'Updated',
+        accessor: 'lastupdate',
+        Cell: ({ row }) => (
+          formatToLocalUKTime(row.values.created)
+        ),
+      },
+      {
+        Header: 'Time Remaining',
+        accessor: 'timeremaining',
+      },
+      { Header: 'Complete By',
+        accessor: 'completeby',
+        Cell: ({ row }) => (
+          formatToLocalUKTime(row.values.created)
+        ),
       },
     ],
     []
@@ -133,9 +177,9 @@ function WorkflowsTable({ data, type }) {
   
   return (
     <div>
-      <h5>{type} Workflows</h5>
+      <h5>{titlePrefix} Workflows</h5>
       {data.length === 0 ? (
-        <p>No {type} Workflows Available</p>
+        <p>No {titlePrefix} Workflows Available</p>
       ) : (
         <table
           {...getTableProps()}
@@ -177,16 +221,16 @@ function WorkflowsTable({ data, type }) {
         </table>
       )}
       {isTasksModalOpen && (
-        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} version={tasksModalVersion} onClose={closeTasksModal} />
+        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} version={tasksModalVersion} onClose={closeTasksModal} serverUrl={serverUrl}/>
       )}
       {isEventsModalOpen && (
-        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} version={eventsModalVer} onClose={closeEventsModal} />
+        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} version={eventsModalVer} onClose={closeEventsModal} serverUrl={serverUrl} />
       )}
       {isPatientModalOpen && (
-        <PatientModal nhs={patientModalNhs} onClose={closePatientModal} />
+        <PatientModal nhs={patientModalNhs} onClose={closePatientModal} serverUrl={serverUrl}/>
       )}
       {isDefinitionModalOpen && (
-        <DefinitionModel pathway={definitionModalPathway} onClose={closeDefinitionModal} />
+        <DefinitionModel pathway={definitionModalPathway} onClose={closeDefinitionModal} serverUrl={serverUrl} />
       )}
     </div>
   );

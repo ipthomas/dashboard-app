@@ -7,7 +7,7 @@ import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
-function ClosedWorkflowsTable({ data }) {
+function ClosedWorkflowsTable({ data, serverUrl }) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
@@ -26,7 +26,6 @@ function ClosedWorkflowsTable({ data }) {
     setTasksModalVersion(version)
     setIsTasksModalOpen(true);
   };
-  console.log(tasksModalVersion)
   const handleOpenPatientModal = (nhs) => {
     setPatientModalNhs(nhs)
     setIsPatientModalOpen(true);
@@ -37,7 +36,6 @@ function ClosedWorkflowsTable({ data }) {
     setEventsModalVer(version)
     setIsEventsModalOpen(true);
   };
-  console.log(eventsModalVer)
   const handleOpenDefinitionModal = (pathway) => {
     setDefinitionModalPathway(pathway);
     setIsDefinitionModalOpen(true);
@@ -109,10 +107,6 @@ function ClosedWorkflowsTable({ data }) {
         Header: 'Overdue',
         accessor: 'overdue',
       },
-      {
-        Header: 'Escalated',
-        accessor: 'escalated',
-      },
     ],
     []
   );
@@ -127,7 +121,7 @@ function ClosedWorkflowsTable({ data }) {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: 'version', desc: false }],
+        sortBy: [{ id: 'created', desc: false }],
       },
     },
     useSortBy
@@ -178,16 +172,16 @@ function ClosedWorkflowsTable({ data }) {
         </table>
       )}
       {isTasksModalOpen && (
-        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} version={tasksModalVersion} onClose={closeTasksModal} />
+        <TasksModal pathway={tasksModalPathway} nhs={tasksModalNhs} version={tasksModalVersion} onClose={closeTasksModal} serverUrl={serverUrl}/>
       )}
       {isEventsModalOpen && (
-        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} version={eventsModalVer} onClose={closeEventsModal} />
+        <EventsModal pathway={eventsModalPathway} nhs={eventsModalNhs} version={eventsModalVer} onClose={closeEventsModal} serverUrl={serverUrl}/>
       )}
       {isPatientModalOpen && (
-        <PatientModal nhs={patientModalNhs} onClose={closePatientModal} />
+        <PatientModal nhs={patientModalNhs} onClose={closePatientModal} serverUrl={serverUrl}/>
       )}
       {isDefinitionModalOpen && (
-        <DefinitionModel pathway={definitionModalPathway} onClose={closeDefinitionModal} />
+        <DefinitionModel pathway={definitionModalPathway} onClose={closeDefinitionModal} serverUrl={serverUrl}/>
       )}
     </div>
   );

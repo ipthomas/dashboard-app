@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-function TasksModal({ pathway, nhs, version, onClose }) {
+function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await fetch(`http://localhost:8080/api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}&vers=${version}`);
-                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}&vers=${version}`);
+                const response = await fetch(serverUrl + `api/state/tasks/status?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}&nhs=${nhs}&vers=${version}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -22,15 +21,12 @@ function TasksModal({ pathway, nhs, version, onClose }) {
         };
 
         fetchData();
-    }, [pathway, nhs, version]);
+    }, [pathway, nhs, version,serverUrl]);
     const formatToLocalUKTime = (dateString) => {
-        // Check if the dateString is "Invalid Date" or "0001-01-01 00:00:00 +0000 UTC"
         if (dateString === "" || dateString === "0001-01-01 00:00:00 +0000 UTC") {
             return ""; // Return an empty string
         }
-
         try {
-            // Define a regular expression to match the parts of the date string
             const regex = /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+\-\d]{5}) (.+)/;
             const match = dateString.match(regex);
 
@@ -38,14 +34,8 @@ function TasksModal({ pathway, nhs, version, onClose }) {
                 const yearMonthDay = match[1];
                 const time = match[2];
                 const offset = match[3];
-
-                // Construct a new date string with the parts rearranged in a format that can be parsed by Date
                 const newDateString = `${yearMonthDay}T${time}${offset}`;
-
-                // Parse the new date string into a JavaScript Date object
                 const date = new Date(newDateString);
-
-                // Format the date to the desired format
                 const options = {
                     year: 'numeric',
                     month: '2-digit',
@@ -55,7 +45,6 @@ function TasksModal({ pathway, nhs, version, onClose }) {
                     second: '2-digit',
                     hour12: false
                 };
-
                 const formattedDate = date.toLocaleString('en-GB', options);
                 return formattedDate;
             }
@@ -63,7 +52,7 @@ function TasksModal({ pathway, nhs, version, onClose }) {
             console.error('Error formatting date:', error);
         }
 
-        return ""; // Return an empty string in case of errors
+        return "";
     };  
     return (
         <div className="modal-overlay">

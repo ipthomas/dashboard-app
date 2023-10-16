@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-function DefinitionModal({ pathway, onClose }) {
+function DefinitionModal({ pathway, onClose, serverUrl }) {
     const [definition, setDefinition] = useState({});
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await fetch(`http://flocalhost|:8080/api/state/definition?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}`);
-                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/definition?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}`);
+                const response = await fetch(serverUrl + `api/state/definition?user=ian.thomas&org=tiani-spirit&role=clinical&pathway=${pathway}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -24,7 +23,7 @@ function DefinitionModal({ pathway, onClose }) {
         };
 
         fetchData();
-    }, [pathway]);
+    }, [pathway, serverUrl]);
 
     return (
         <div className="modal-overlay">

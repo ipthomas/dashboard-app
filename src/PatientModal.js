@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-function PatientModal({ nhs, onClose }) {
+function PatientModal({ nhs, onClose, serverUrl }) {
     const [patient, setPatient] = useState({});
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/api/state/patient?user=ian.thomas&org=tiani-spirit&role=clinical&nhs=${nhs}`);
+                const response = await fetch(serverUrl +`api/state/patient?user=ian.thomas&org=tiani-spirit&role=clinical&nhs=${nhs}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -23,7 +23,7 @@ function PatientModal({ nhs, onClose }) {
         };
 
         fetchData();
-    },[nhs]);
+    },[nhs,serverUrl]);
 
     return (
         <div className="modal-overlay">
