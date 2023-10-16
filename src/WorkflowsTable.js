@@ -20,6 +20,7 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
   const [patientModalNhs, setPatientModalNhs] = useState(null);
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
+  
   const formatToLocalUKTime = (dateString) => {
     if (dateString === "" || dateString === "0001-01-01 00:00:00 +0000 UTC") {
       return ""; // Return an empty string
@@ -141,7 +142,7 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
         Header: 'Updated',
         accessor: 'lastupdate',
         Cell: ({ row }) => (
-          formatToLocalUKTime(row.values.created)
+          formatToLocalUKTime(row.values.lastupdate)
         ),
       },
       {
@@ -151,7 +152,7 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
       { Header: 'Complete By',
         accessor: 'completeby',
         Cell: ({ row }) => (
-          formatToLocalUKTime(row.values.created)
+          formatToLocalUKTime(row.values.completeby)
         ),
       },
     ],

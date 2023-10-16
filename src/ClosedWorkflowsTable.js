@@ -6,7 +6,6 @@ import EventsModal from './EventsModal';
 import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
-
 function ClosedWorkflowsTable({ data, serverUrl }) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
@@ -20,6 +19,39 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
   const [patientModalNhs, setPatientModalNhs] = useState(null);
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [isDefinitionModalOpen, setIsDefinitionModalOpen] = useState(false);
+  
+  const formatToLocalUKTime = (dateString) => {
+    if (dateString === "" || dateString === "0001-01-01 00:00:00 +0000 UTC") {
+      return ""; // Return an empty string
+    }
+    try {
+      const regex = /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+\-\d]{5}) (.+)/;
+      const match = dateString.match(regex);
+
+      if (match) {
+        const yearMonthDay = match[1];
+        const time = match[2];
+        const offset = match[3];
+        const newDateString = `${yearMonthDay}T${time}${offset}`;
+        const date = new Date(newDateString);
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+        const formattedDate = date.toLocaleString('en-GB', options);
+        return formattedDate;
+      }
+    } catch (error) {
+      console.error('Error formatting date:', error);
+    }
+
+    return "";
+  };
   const handleOpenTasksModal = (pathway, nhs, version) => {
     setTasksModalPathway(pathway);
     setTasksModalNhs(nhs)
@@ -94,10 +126,16 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
       {
         Header: 'Created',
         accessor: 'created',
+        Cell: ({ row }) => (
+          formatToLocalUKTime(row.values.created)
+        ),
       },
       {
-        Header: 'Updated',
+        Header: 'Completed On',
         accessor: 'lastupdate',
+        Cell: ({ row }) => (
+          formatToLocalUKTime(row.values.created)
+        ),
       },
       {
         Header: 'Duration',
