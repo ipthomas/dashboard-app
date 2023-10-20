@@ -216,27 +216,27 @@ function App() {
           </div>
           ) :
           <div>
-              <p>No {selectedPathway} Workflows</p>
+                  <p>No {selectedPathway.toUpperCase()} Workflows</p>
           </div>
         }
         {openWorkflowsData !== null ?
           (
             <div>
-              <WorkflowsTable data={openWorkflowsData} titlePrefix={'In Progress'} serverUrl={serverUrl}/>
+                    <WorkflowsTable data={openWorkflowsData} titlePrefix={'In Progress ' + selectedPathway.toUpperCase()} serverUrl={serverUrl}/>
             </div>
           ) :
           <div>
-            <p>No Open Workflows</p>
+                  <p>No Open {selectedPathway.toUpperCase()} Workflows</p>
           </div>
         }
         {closedWorkflowsData !== null ?
           (
           <div>
-            <ClosedWorkflowsTable data={closedWorkflowsData} serverUrl={serverUrl} />
+                    <ClosedWorkflowsTable data={closedWorkflowsData} titlePrefix={'Closed ' + selectedPathway.toUpperCase()} serverUrl={serverUrl} />
           </div>
           ) :
           <div>
-            <p>No Closed Workflows</p>
+                  <p>No Closed {selectedPathway.toUpperCase()} Workflows</p>
           </div>
         }
         </>

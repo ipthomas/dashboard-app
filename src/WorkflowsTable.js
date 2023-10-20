@@ -155,6 +155,10 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
           formatToLocalUKTime(row.values.completeby)
         ),
       },
+      {
+        Header: 'Duration',
+        accessor: 'duration',
+      },
     ],
     []
   );

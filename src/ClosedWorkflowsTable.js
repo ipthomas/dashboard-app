@@ -6,7 +6,7 @@ import EventsModal from './EventsModal';
 import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
-function ClosedWorkflowsTable({ data, serverUrl }) {
+function ClosedWorkflowsTable({ data, titlePrefix, serverUrl }) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
@@ -138,7 +138,7 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
         Header: 'Completed On',
         accessor: 'lastupdate',
         Cell: ({ row }) => (
-          formatToLocalUKTime(row.values.created)
+          formatToLocalUKTime(row.values.lastupdate)
         ),
       },
       {
@@ -166,9 +166,9 @@ function ClosedWorkflowsTable({ data, serverUrl }) {
   );
   return (
     <div>
-      <h5>Closed Workflows</h5>
+      <h5>{titlePrefix}  Workflows</h5>
       {data.length === 0 ? (
-        <p>No Closed Workflows Available</p>
+        <p>No {titlePrefix} Workflows Available</p>
       ) : (
         <table
           {...getTableProps()}
