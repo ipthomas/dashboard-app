@@ -166,7 +166,7 @@ function App() {
   return (
     <div className="App">
       <h1>
-        <img src={logo} alt="Logo" className="logo" onClick={quoteOfTheDay}/>
+        <img src={logo} alt="Logo" className="logo" onMouseOver={quoteOfTheDay}/>
       Workflows Dashboard
       </h1>
       <div className="refresh-rate-container">
