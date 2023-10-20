@@ -4,7 +4,8 @@ import WorkflowsTable from './WorkflowsTable';
 import ClosedWorkflowsTable from './ClosedWorkflowsTable';
 import DashboardBarChart from './DashboardBarChart';
 import PathwaysTable from './PathwaysTable';
-import logo from './provide-logo.png';
+import logo1 from './eput-logo.jpeg';
+import logo2 from './provide-logo.png';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -165,8 +166,12 @@ function App() {
   }, [fetchDashboardData, selectedPathway,refreshRate]);
   return (
     <div className="App">
+      <h1 className="logo" >
+        <img src={logo1} alt="eput" onClick={quoteOfTheDay}/>
+        <p> In Partnership with </p>
+        <img src={logo2} alt="provide"  onClick={quoteOfTheDay} />
+      </h1>
       <h1>
-        <img src={logo} alt="Logo" className="logo" onMouseOver={quoteOfTheDay}/>
       Workflows Dashboard
       </h1>
       <div className="refresh-rate-container">
