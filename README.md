@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Initial Configuration
+
+    This application utilise the Event Service API (https://github.com/ipthomas/ttxdwuser). 
+    The URL of this service is set as a const in the app.js. 
+    Edit app.js with the value for your Event Service URL
+    i.e const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
+    
 ## Available Scripts
 
 In the project directory, you can run:
