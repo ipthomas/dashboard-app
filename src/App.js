@@ -4,7 +4,7 @@ import WorkflowsTable from './WorkflowsTable';
 import ClosedWorkflowsTable from './ClosedWorkflowsTable';
 import DashboardBarChart from './DashboardBarChart';
 import PathwaysTable from './PathwaysTable';
-import logo from './eput-logo.jpeg';
+import logo from './provide-logo.png';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
