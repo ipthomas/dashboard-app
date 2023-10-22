@@ -25,24 +25,26 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
     if (dateString === "" || dateString === "0001-01-01 00:00:00 +0000 UTC") {
       return ""; // Return an empty string
     }
-
     try {
-      const regex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) ([+\-\d]{5}) (.+)/;
+      const regex = /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+\-\d]{5}) (.+)/;
       const match = dateString.match(regex);
 
       if (match) {
-        const year = match[1];
-        const month = match[2];
-        const day = match[3];
-        const hour = match[4];
-        const minute = match[5];
-        const second = match[6];
-        
-        const date = new Date(year, month - 1, day, hour, minute, second);
-        const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getUTCDay()];
-        const monthName = new Intl.DateTimeFormat('en-GB', { month: 'long' }).format(date);
-
-        const formattedDate = `${hour}:${minute}:${second} ${dayOfWeek} ${day} ${monthName} ${year}`;
+        const yearMonthDay = match[1];
+        const time = match[2];
+        const offset = match[3];
+        const newDateString = `${yearMonthDay}T${time}${offset}`;
+        const date = new Date(newDateString);
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+        const formattedDate = date.toLocaleString('en-GB', options);
         return formattedDate;
       }
     } catch (error) {
@@ -51,7 +53,6 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
 
     return "";
   };
-
   const handleOpenTasksModal = (pathway, nhs, version) => {
     setTasksModalPathway(pathway);
     setTasksModalNhs(nhs)
