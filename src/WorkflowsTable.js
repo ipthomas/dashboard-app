@@ -41,11 +41,11 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
           day: '2-digit',
           hour: '2-digit',
           minute: '2-digit',
-          second: '2-digit',
           hour12: false
         };
         const formattedDate = date.toLocaleString('en-GB', options);
-        return formattedDate;
+        const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getUTCDay()];
+        return dayOfWeek + ' ' + formattedDate;
       }
     } catch (error) {
       console.error('Error formatting date:', error);
