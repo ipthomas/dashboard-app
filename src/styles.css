@@ -25,13 +25,13 @@ h1 {
     margin: 0 auto;
 }
 h2 {
-    color: #060707;
-    background-color: rgba(55, 255, 255, 0.05);
+    color: white;
+    background-color: black;
     border-style: outset;
     align-content: center;
     font-family: 'Open Sans';
     justify-content: center;
-    border: 1px solid #ddd;
+    border: 5px solid #ddd;
     margin: 0 auto;
 }
 h3 {

@@ -10,7 +10,9 @@ function DashboardBarChart({ data, title, pathway}) {
             chartInstance.current.destroy();
         }
         const chartData = {
-            labels: Object.keys(data),
+            labels: Object.keys(data).map(key => (key && key.toString().toUpperCase())),
+
+            // labels: Object.keys(data),
             datasets: [
                 {
                     label: title,

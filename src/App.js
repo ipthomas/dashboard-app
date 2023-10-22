@@ -166,16 +166,10 @@ function App() {
   }, [fetchDashboardData, selectedPathway,refreshRate]);
   return (
     <div className="App">
-      <h1 className="logo" >
-        <img src={logo1} alt="eput" onClick={quoteOfTheDay}/>
-        <p> In Partnership with </p>
-        <img src={logo2} alt="provide"  onClick={quoteOfTheDay} />
-      </h1>
-      <h1>
+      
+      <h2>
       Workflows Dashboard
-      </h1>
-      <div className="refresh-rate-container">
-        <span>Refresh Rate </span>
+        <span> - Refresh Rate </span>
         <select
           name='refreshrate'
           value={refreshRate}
@@ -190,7 +184,12 @@ function App() {
           <option value="1800000">30 minutes</option>
           <option value="3600000">1 hour</option>
         </select>
-      </div>
+      </h2>
+        <h1 className="logo" >
+          <img src={logo1} alt="eput" onClick={quoteOfTheDay} />
+          <p> In Partnership with </p>
+          <img src={logo2} alt="provide" onClick={quoteOfTheDay} />
+        </h1>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
