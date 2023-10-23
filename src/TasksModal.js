@@ -42,7 +42,6 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                     day: '2-digit',
                     hour: '2-digit',
                     minute: '2-digit',
-                    second: '2-digit',
                     hour12: false
                 };
                 const formattedDate = date.toLocaleString('en-GB', options);
@@ -91,7 +90,7 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                                 {tasks.taskstate.map((task) => (                                   
                                     <tr key={task.taskid}>
                                         <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
-                                            {task.taskid}
+                                            {task.taskid+1}
                                         </td>
                                         <td className={task.targetmet ? 'escalated-false' : 'overdue-true'}>
                                             {task.name}
