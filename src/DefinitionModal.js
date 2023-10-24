@@ -45,6 +45,7 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                             <th>Start By</th>
                             <th>Complete By</th>
                             <th>Escalate </th>
+                            <th>Notify</th>
                             <th>Completion Condition</th>
                             <th>Or</th>
                         </tr>
@@ -54,6 +55,9 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                                 <td>{definition.startbytime}</td>
                                 <td>{definition.completebytime}</td>
                                 <td>{definition.expirationtime}</td>
+                                {definition.potentialOwners.map((owner) => (
+                                    <td>{owner.organizationalEntity.user}</td>
+                                ))}
                                 {definition.completionBehavior.map((behaviour) => (
                                     <td> {behaviour.completion.condition} </td>
                                 ))}
@@ -68,6 +72,7 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                             <th>Start By</th>
                             <th>Complete By</th>
                             <th>Escalate </th>
+                            <th>Optional</th>
                             <th>Completion Condition</th>
                             <th>Or</th>
                         </tr>
@@ -79,6 +84,11 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                                 <td>{task.startbytime}</td>
                                 <td>{task.completebytime}</td>
                                 <td>{task.expirationtime}</td>
+                                {task.isskipable === true ?
+                                    <td>TRUE</td>
+                                    :
+                                    <td>FALSE</td>
+                                }
                                 {task.completionBehavior.map((behaviour) => (
                                     <td> {behaviour.completion.condition} </td>
                                 ))}
