@@ -69,7 +69,7 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                         <table className='modal-table'>
                             <thead>
                                 <tr>
-                                    <th colSpan={12}>NHS ID {nhs} {pathway} Workflow Tasks State</th>
+                                    <th colSpan={15}>NHS ID {nhs} {pathway} Workflow Tasks State</th>
                                 </tr>
                                 <tr>
                                     <th>ID</th>
@@ -77,13 +77,17 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                                     <th>On Target</th>
                                     <th>Escalated</th>
                                     <th>Status</th>
+                                    <th>Duration</th>
+                                    <th>Time Remaining</th>
                                     <th>Owner</th>
                                     <th>Start Task By</th>
+                                    {/* <th>Working Days Start Task By</th> */}
                                     <th>Complete Task By</th>
+                                    {/* <th>Working Days Complete Task By</th> */}
                                     <th>Escalate Task On</th>
+                                    {/* <th>Working Days Escalate Task On</th> */}
                                     <th>Started On</th>
                                     <th>Completed On</th>
-                                    <th>Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,13 +106,17 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                                             {task.escalated.toString()}
                                         </td>
                                         <td>{task.status}</td>
+                                        <td>{task.duration}</td>
+                                        <td>{task.timeremaining}</td>
                                         <td>{task.owner}</td>
                                         <td>{formatToLocalUKTime(task.startby)}</td>
+                                        {/* <td>{formatToLocalUKTime(task.wdstartby)}</td> */}
                                         <td>{formatToLocalUKTime(task.completeby)}</td>
+                                        {/* <td>{formatToLocalUKTime(task.wdcompleteby)}</td> */}
                                         <td>{formatToLocalUKTime(task.escalateon)}</td>
+                                        {/* <td>{formatToLocalUKTime(task.wdescalateon)}</td> */}
                                         <td>{formatToLocalUKTime(task.startedon)}</td>
                                         <td>{formatToLocalUKTime(task.completedon)}</td>
-                                        <td>{task.duration}</td>
                                     </tr>
                                 ))}
                             </tbody>

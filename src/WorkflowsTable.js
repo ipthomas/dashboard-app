@@ -7,7 +7,7 @@ import PatientModal from './PatientModal';
 import DefinitionModel from './DefinitionModal';
 import { FaEye } from 'react-icons/fa';
 
-function WorkflowsTable({ data, titlePrefix, serverUrl }) {
+function WorkflowsTable({ data, titlePrefix, serverUrl}) {
   const [tasksModalPathway, setTasksModalPathway] = useState(null);
   const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
   const [tasksModalNhs, setTasksModalNhs] = useState(null);
@@ -155,10 +155,21 @@ function WorkflowsTable({ data, titlePrefix, serverUrl }) {
           formatToLocalUKTime(row.values.completeby)
         ),
       },
+      // {
+      //   Header: 'Working Days Complete By',
+      //   accessor: 'wdcompleteby',
+      //   Cell: ({ row }) => (
+      //     formatToLocalUKTime(row.values.wdcompleteby)
+      //   ),
+      // },
       {
         Header: 'Duration',
         accessor: 'duration',
       },
+      // {
+      //   Header: 'Working Days Duration',
+      //   accessor: 'wdduration',
+      // },
     ],
     []
   );

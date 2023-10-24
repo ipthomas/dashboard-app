@@ -19,8 +19,9 @@ function App() {
   const [selectedPathway, setSelectedPathway] = useState("plac");
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
-  // const serverUrl = 'http://localhost:8080/'
-  const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
+  // const [calOpts, setCalOpts] = useState("caltime");
+  const serverUrl = 'http://localhost:8080/'
+  // const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
   
   const quoteOfTheDay = async () => {
     try {
@@ -169,7 +170,7 @@ function App() {
       
       <h2>
       Workflows Dashboard
-        <span> - Refresh Rate </span>
+        <span>  Refresh Rate </span>
         <select
           name='refreshrate'
           value={refreshRate}
@@ -184,12 +185,23 @@ function App() {
           <option value="1800000">30 minutes</option>
           <option value="3600000">1 hour</option>
         </select>
+        {/* <span>  Show </span>
+        <select
+          name='calopts'
+          value={calOpts}
+          onChange={(e) => setCalOpts(e.target.value)}
+        >
+          <option value="caltime">Calendar Time</option>
+          <option value="worktime">Working Time</option>
+          <option value="both">Both</option>
+        </select>
+        <span> Columns</span> */}
       </h2>
-        <h1 className="logo" >
-          <img src={logo1} alt="eput" onClick={quoteOfTheDay} />
-          <p> In Partnership with </p>
-          <img src={logo2} alt="provide" onClick={quoteOfTheDay} />
-        </h1>
+      <h1 className="logo" >
+        <img src={logo1} alt="eput" onClick={quoteOfTheDay} />
+        <p> In Partnership with </p>
+        <img src={logo2} alt="provide" onClick={quoteOfTheDay} />
+      </h1>
       {loading ? (
         <p>Loading Data............</p>
       ) : error ? (
