@@ -20,8 +20,8 @@ function App() {
   const [pathways, setPathways] = useState([])
   const [refreshRate, setRefreshRate] = useState(3600000);
   // const [calOpts, setCalOpts] = useState("caltime");
-  const serverUrl = 'http://localhost:8080/'
-  // const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
+  // const serverUrl = 'http://localhost:8080/'
+  const serverUrl = 'https://fwa7l2kp71.execute-api.eu-west-1.amazonaws.com/beta/'
   
   const quoteOfTheDay = async () => {
     try {
