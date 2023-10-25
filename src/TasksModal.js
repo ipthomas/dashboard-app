@@ -72,8 +72,8 @@ function TasksModal({ pathway, nhs, version, onClose, serverUrl }) {
                                     <th colSpan={15}>NHS ID {nhs} {pathway} Workflow Tasks State</th>
                                 </tr>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Task</th>
+                                    <th>Description</th>
                                     <th>On Target</th>
                                     <th>Escalated</th>
                                     <th>Status</th>

@@ -67,7 +67,7 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                     <h3>Task Definitions</h3>
                     <table>
                         <tr>
-                            <th>ID</th>
+                            <th>Task</th>
                             <th>Name</th>
                             <th>Start By</th>
                             <th>Complete By</th>
