@@ -80,7 +80,7 @@ function DefinitionModal({ pathway, onClose, serverUrl }) {
                             {definition.tasks.map((task) => (   
                             <tr>
                                 <td>{task.id}</td>
-                                <td>{task.name}</td>
+                                <td>{task.description}</td>
                                 <td>{task.startbytime}</td>
                                 <td>{task.completebytime}</td>
                                 <td>{task.expirationtime}</td>
